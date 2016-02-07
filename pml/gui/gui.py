@@ -15,10 +15,16 @@ def main():
 @app.route("/", methods=['POST'])
 def text2File():
     path = os.path.join(BUCKET_PATH, "test.pml")
-    file_handle = open(path, "w+")
+    file_handle = open(path, "w")
     text = request.form['text']
-    file_handle.write(text)
-    file_handle.close()
+    #save input file to local temp file
+
+    while 1:
+        line = text.file.readline()
+        if not line: break
+        file_handle.write(line)
+        file_handle.close()
+        #file_handle.write(text)
 
 if __name__ == "__main__":
     app.debug = True
