@@ -12,7 +12,7 @@ Issues encountered:
 
 Able to build a simple web application with flask but unable to link it with the pmlchecker tool. 
 Attempted to use initially a sql architecture to store input pml code to then be used as input for pmlcheck. 
-Decided to use SQLAlchemy as our sql tool for storing small numbers of items in a local file to be used as a type of proxy database.
+Decided to use SQLAlchemy as our sql tool for storing small numbers of items in a local file to be used as a type of proxy database. Could not successfully store as file as was stored as a blank file each time. 
 Similarly had issues displaying pmlcheck output.
 Attempted to use cgi to update our webapp but was unable to pull results from pmlcheck to do so. 
 
