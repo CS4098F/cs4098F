@@ -14,10 +14,14 @@ iv)libxml2 (Ubuntu package libxml2; see also http://www.xmlsoft.org/).
 git  -- "sudo apt-get install git"
 flask -- pip install Flask
 
-Installation instructions
+Installation instructions:
+
 1- git clone the repository
+
 2- execute  sudo make  on terminal where the Makefile is
+
 3- run python gui.py on terminal 
-3- go to http://127.0.0.1:5000/ in browser
+
+4- go to http://127.0.0.1:5000/ in browser
 
 
