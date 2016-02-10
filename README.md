@@ -11,8 +11,10 @@ iv)libxml2 (Ubuntu package libxml2; see also http://www.xmlsoft.org/).
 
 2:Install library dependencies for the app :
 
-git  -- "sudo apt-get install git"
-flask -- pip install Flask
+git:
+"sudo apt-get install git"
+
+flask: pip install Flask
 
 Installation instructions:
 
