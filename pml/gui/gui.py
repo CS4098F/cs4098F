@@ -15,7 +15,6 @@ def main():
 
 @app.route("/", methods=['POST'])
 def text2File():
-<<<<<<< HEAD
 
     text = request.form['text']
     path = os.path.join(BUCKET_PATH, "test.pml")
@@ -23,21 +22,8 @@ def text2File():
     #save input file to local temp file
     file_handle.write(text)
     file_handle.close()
-=======
-    path = os.path.join(BUCKET_PATH, "test.pml")
-    file_handle = open(path, "w")
-    text = request.form['text']
-    #save input file to local temp file
 
-    while 1:
-        line = text.file.readline()
-        if not line: break
-        file_handle.write(line)
-        file_handle.close()
-        #file_handle.write(text)
->>>>>>> origin/master
-
-    try:
+    try:                                #have to fix this
         process = subprocess.Popen(["C:/Users/sunil/Desktop/cs4098F/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     except OSError as error:
