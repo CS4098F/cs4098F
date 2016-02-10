@@ -2,17 +2,21 @@
 Repository for CS4098 Group F
 
 
-Installation: 
+1:Install library dependencies for PEOS
 
-1) Install flask 
-2) Install sqlalchemy
-3) Run make within the pml folder
+i)TCL (Ubuntu packages tcl and tcl-dev; see also http://www.activestate.com/activetcl; ).
+ii)check (Ubuntu package check; see also http://check.sourceforge.net/). Check is only required to run the unit tests, but the kernel build will fail if check is not present.
+iii)expect (Ubuntu package expect; see also http://expect.sourceforge.net/). Required to run the acceptance tests in os/kernel/test/accept_tests.
+iv)libxml2 (Ubuntu package libxml2; see also http://www.xmlsoft.org/).
 
-Issues encountered: 
+2:Install library dependencies for the app
+git  -- "sudo apt-get install git"
+flask -- pip install Flask
 
-Able to build a simple web application with flask but unable to link it with the pmlchecker tool. 
-Attempted to use initially a sql architecture to store input pml code to then be used as input for pmlcheck. 
-Decided to use SQLAlchemy as our sql tool for storing small numbers of items in a local file to be used as a type of proxy database. Could not successfully store as file as was stored as a blank file each time. 
-Similarly had issues displaying pmlcheck output.
-Attempted to use cgi to update our webapp but was unable to pull results from pmlcheck to do so. 
+Installation instructions
+1- git clone the repository
+2- execute  sudo make  on terminal where the Makefile is
+3- run python gui.py on terminal 
+3- go to http://127.0.0.1:5000/ in browser
+
 
