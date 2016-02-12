@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
- 
-<head>
-    <title>Python Flask Bucket List App</title>
- 
-    
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
- 
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
- 
- 
-</head>
- 
-<body>
- 
-    <div class="container">
-        <div class="header">
-            <h3 class="text-muted">PML GUI</h3>
-        </div>
- 
-        <div class="jumbotron">
-            <h1>PML Checker Input</h1>
-            <p class="lead"></p>
-             
-			<form action="/" method="POST">
-				<textarea rows="4" cols="50" name="text">	
-				</textarea>
-				<input type="submit" value="Send">
-			</form>
-		
-        </div>
-		
-
-
-        <footer class="footer">
-            <p>&copy; Luminous 2016</p>
-        </footer>
- 
-    </div>
-</body>
- 
-</html>
+    <head>
+        <title>Python Flask Bucket List App</title>
+        <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h3 class="text-muted">PML GUI</h3>
+                    </div>
+                    <div class="jumbotron">
+                        <h1>PML Checker Input</h1>
+                        <p class="lead"></p>
+                        <form action="/" method="POST">
+                            <textarea rows="4" cols="50" name="text"></textarea>
+                            <input type="submit" value="Send">
+                            </form>
+                            <title>Upload new File</title>
+                            <h1>Upload new File</h1>
+                            <form action="/upload" method=post enctype=multipart/form-data>
+                                <p>
+                                    <input type=file name=file>
+                                        <input type=submit value=Upload>
+                                        </form>
+                                    </div>
+                                    <footer class="footer">
+                                        <p>&copy; Luminous 2016</p>
+                                    </footer>
+                                </div>
+                            </body>
+                        </html>
