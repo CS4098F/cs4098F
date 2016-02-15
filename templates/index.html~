@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Editor</title>
+  <style type="text/css" media="screen">
+    body {
+        overflow: hidden;
+    }
+    #editor {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 750px;
+        left: 0;
+        right: 1750px;
+    }
+  </style>
+        <title>Python Flask Bucket List App</title>
+        <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+            </head>
+            <body>
+		<pre id="editor">function foo(items) {
+    var i;
+    for (i = 0; i &lt; items.length; i++) {
+        alert("Ace Rocks " + items[i]);
+    }
+}</pre>
+
+<script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.session.setMode("ace/mode/javascript");
+</script>
+
+                <div class="container">
+                    <div class="header">
+                        <h3 class="text-muted">PML GUI</h3>
+                    </div>
+                    <div class="jumbotron">
+                        <h1>PML Checker Input</h1>
+                        <p class="lead"></p>
+                        <form action="/" method="POST">
+                            <textarea rows="4" cols="50" name="text"></textarea>
+                            <input type="submit" value="Send">
+                            </form>
+                            <title>Upload new File</title>
+                            <h1>Upload new File</h1>
+                            <form action="/upload" method=post enctype=multipart/form-data>
+                                <p>
+                                    <input type=file name=file>
+                                        <input type=submit value=Upload>
+                                        </form>
+                                    </div>
+                                    <footer class="footer">
+                                        <p>&copy; Luminous 2016</p>
+                                    </footer>
+                                </div>
+                            </body>
+                        </html>
