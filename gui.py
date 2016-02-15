@@ -16,7 +16,7 @@ app.config['BUCKET_PATH'] = BUCKET_PATH
 @app.route('/')
 def main():
 
-    return render_template('index.html')
+    return render_template('index1.html')
 
 
 @app.route('/temp_folder/<filename>')
