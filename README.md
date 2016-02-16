@@ -9,21 +9,21 @@ ii)check (Ubuntu package check; see also http://check.sourceforge.net/). Check i
 iii)expect (Ubuntu package expect; see also http://expect.sourceforge.net/). Required to run the acceptance tests in os/kernel/test/accept_tests.
 iv)libxml2 (Ubuntu package libxml2; see also http://www.xmlsoft.org/).
 
-2:Install library dependencies for the app :
+## 2:Install library dependencies for the app :
 
 git:
 "sudo apt-get install git"
 
 flask: pip install Flask
 
-Installation instructions:
+## Installation instructions:
 
-1- git clone the repository
+1- git clone the repository ``` https://github.com/CS4098F/cs4098F.git ```
 
-2- execute  sudo make  on terminal where the Makefile is
+2- ```cd peos``` and execute  ```sudo make```  on terminal where the Makefile is
 
-3- run python gui.py on terminal 
+3- go back just one level```cd ..```and run ```python gui.py``` 
 
-4- go to http://127.0.0.1:5000/ in browser
+4- go to ```http://127.0.0.1:5000/`` in browser to start app
 
 
