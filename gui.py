@@ -1,6 +1,7 @@
 import json
 import os, sys
 import subprocess
+import uuid
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 
 
@@ -54,26 +55,28 @@ def upload_file():
 #     return render_template("editor.html", output = file_handle.read() )
 
 
-@app.route("/", methods=['POST'])
+@app.route("/text2File", methods=['POST'])
 def text2File():
+	text = request.form["text"]
+	if text:
+		filename = str(uuid.uuid4())
+		path = os.path.join(BUCKET_PATH, filename)
 
-    path = os.path.join(BUCKET_PATH, "test.pml")
-    text = request.form["text"]
-    file_handle = open(path, "w")
-    #save input file to local temp file
-    file_handle.write(text)
-    file_handle.close()
+    	file_handle = open(path, "w")
+    	#save input file to local temp file
+    	file_handle.write(text)
+    	file_handle.close()
 
 
-    process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    	process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    #except OSError as error:
-    #    return error
+    	#except OSError as error:
+    	#    return error
 
-    output_res, err = process.communicate()
-    if process.returncode > 0:
-        return err
-    return render_template('result.html', output = output_res)
+    	output_res, err = process.communicate()
+    	if process.returncode > 0:
+        	return err
+    	return render_template('result.html', output = output_res)
 
 
 if __name__ == "__main__":
