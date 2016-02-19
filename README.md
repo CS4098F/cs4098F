@@ -14,7 +14,8 @@ iv)libxml2 (Ubuntu package libxml2; see also http://www.xmlsoft.org/).
 git:
 "sudo apt-get install git"
 
-sudo apt-get install flask
+sudo apt-get install python-pip
+sudo pip install Flask
 
 ## Installation instructions:
 
