@@ -32,16 +32,24 @@ def upload_file():
         if files:
             out_data = files.read()
             filename = files.filename
-            path = os.path.join(BUCKET_PATH, filename)
+            paths = os.path.join(BUCKET_PATH, filename)
 
-            file_handle = open(path, "w")
+            process = subprocess.Popen(["peos/pml/graph/traverse",paths],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            output_res, err = process.communicate()
+            file_handle = open(paths, "w")
             #write data to file
-            file_handle.write(out_data)
+            file_handle.write(output_res)
+
+            base = os.path.splitext(filename)[0]
+
+            os.rename( filename, os.path.join(BUCKET_PATH,base) + '.dot')
             file_handle.close()
 
-            return render_template("editor.html", output = out_data)
-        else:
-            return redirect('/')
+
+    	    return render_template('/templates/output.html', output = output_res)
+        #else:
+         #   return redirect('/')
 
 
 # @app.route('/editor', methods=['GET', 'POST'])
@@ -66,7 +74,6 @@ def text2File():
     	#save input file to local temp file
     	file_handle.write(text)
     	file_handle.close()
-
 
     	process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
