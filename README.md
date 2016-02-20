@@ -24,6 +24,10 @@ sudo apt-get install python-pip
 
 sudo pip install Flask
 
+sudo pip install graphviz
+
+sudo pip install pydot
+
 ## Installation instructions:
 
 1- git clone the repository ``` https://github.com/CS4098F/cs4098F.git ```
