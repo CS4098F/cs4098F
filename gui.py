@@ -40,14 +40,15 @@ def upload_file():
             file_handle.close()
 
             process = subprocess.Popen(["peos/pml/graph/traverse",paths],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    	    output_dot = process.communicate()
-            
-            paths2 = os.path.join(BUCKET_PATH, filename + ".dot")
+            output_dot = process.communicate()
+
+            filename2, file_extension = os.path.splitext(filename)
+            paths2 = os.path.join(BUCKET_PATH, filename2 + ".dot")
             dot_file = open(paths2, "w")
             dot_file.write(str(output_dot))
             dot_file.close()
 
-    	    return render_template('/editor.html', output = out_data, output_dot = output_dot)
+            return render_template('/editor.html', output = out_data, output_dot = output_dot)
         else:
             return redirect('/')
 
@@ -65,25 +66,25 @@ def upload_file():
 
 @app.route("/text2File", methods=['POST'])
 def text2File():
-	text = request.form["text"]
-	if text:
-		filename = str(uuid.uuid4())
-		path = os.path.join(BUCKET_PATH, filename)
+    text = request.form["text"]
+    if text:
+        filename = str(uuid.uuid4())
+        path = os.path.join(BUCKET_PATH, filename)
 
-    	file_handle = open(path, "w")
-    	#save input file to local temp file
-    	file_handle.write(text)
-    	file_handle.close()
+        file_handle = open(path, "w")
+        #save input file to local temp file
+        file_handle.write(text)
+        file_handle.close()
 
-    	process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    	#except OSError as error:
-    	#    return error
+        #except OSError as error:
+        #    return error
 
-    	output_res, err = process.communicate()
-    	if process.returncode > 0:
-        	return err
-    	return render_template('result.html', output = output_res)
+        output_res, err = process.communicate()
+        if process.returncode > 0:
+            return err
+        return render_template('result.html', output = output_res)
 
 
 if __name__ == "__main__":
