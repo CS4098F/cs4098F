@@ -42,7 +42,7 @@ def upload_file():
             process = subprocess.Popen(["peos/pml/graph/traverse",paths],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     	    output_dot = process.communicate()
             
-            paths2 = os.path.join(BUCKET_PATH, filename.split + ".dot")
+            paths2 = os.path.join(BUCKET_PATH, filename + ".dot")
             dot_file = open(paths2, "w")
             dot_file.write(str(output_dot))
             dot_file.close()
