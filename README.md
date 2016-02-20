@@ -16,6 +16,7 @@ v) sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev
 
 
 ## 2:Install library dependencies for the app :
+```sudo apt-get install graphviz``` 
 
 ```sudo apt-get install git```
 
