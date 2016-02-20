@@ -18,15 +18,20 @@ v) sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev
 ## 2:Install library dependencies for the app :
 
 git:
-"sudo apt-get install git"
+```sudo apt-get install git```
 
-sudo apt-get install python-pip
+```sudo apt-get install python-pip```
 
-sudo pip install Flask
+```sudo pip install Flask```
 
-sudo pip install graphviz
+```sudo pip install graphviz```
 
-sudo pip install pydot
+```sudo pip install pydot```
+
+If you run into 'global name 'dot_parser' is not defined' error, then do:```
+```pip uninstall pyparsing```
+```pip install -Iv https://pypi.python.org/packages/source/p/pyparsing/pyparsing-1.5.7.tar.gz#md5=9be0fcdcc595199c646ab317c1d9a709```
+```pip install pydot```
 
 ## Installation instructions:
 
