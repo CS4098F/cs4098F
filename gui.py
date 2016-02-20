@@ -34,22 +34,22 @@ def upload_file():
             filename = files.filename
             paths = os.path.join(BUCKET_PATH, filename)
 
-            process = subprocess.Popen(["peos/pml/graph/traverse",paths],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-            output_res, err = process.communicate()
             file_handle = open(paths, "w")
             #write data to file
-            file_handle.write(output_res)
-
-            base = os.path.splitext(filename)[0]
-
-            os.rename( filename, os.path.join(BUCKET_PATH,base) + '.dot')
+            file_handle.write(out_data)
             file_handle.close()
 
+            process = subprocess.Popen(["peos/pml/graph/traverse",paths],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    	    output_dot = process.communicate()
+            
+            paths2 = os.path.join(BUCKET_PATH, filename.split + ".dot")
+            dot_file = open(paths2, "w")
+            dot_file.write(str(output_dot))
+            dot_file.close()
 
-    	    return render_template('/templates/output.html', output = output_res)
-        #else:
-         #   return redirect('/')
+    	    return render_template('/editor.html', output = out_data, output_dot = output_dot)
+        else:
+            return redirect('/')
 
 
 # @app.route('/editor', methods=['GET', 'POST'])
