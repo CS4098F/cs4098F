@@ -29,9 +29,9 @@ git:
 ```sudo pip install pydot```
 
 If you run into 'global name 'dot_parser' is not defined' error, then do:
-```pip uninstall pyparsing```
-```pip install -Iv https://pypi.python.org/packages/source/p/pyparsing/pyparsing-1.5.7.tar.gz#md5=9be0fcdcc595199c646ab317c1d9a709```
-```pip install pydot```
+1- ```sudo pip uninstall pyparsing```
+2- ```sudo pip install -Iv https://pypi.python.org/packages/source/p/pyparsing/pyparsing-1.5.7.tar.gz#md5=9be0fcdcc595199c646ab317c1d9a709```
+3- ```sudo pip install pydot```
 
 ## Installation instructions:
 
