@@ -26,7 +26,8 @@ v) sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev
 
 ```sudo pip install graphviz```
 
-```sudo pip install pydot```
+```sudo pip install pygraphviz```
+If pygraphviz fails to install then do ```sudo pip install python-dev``` and try again
 
 ### If you run into 'global name 'dot_parser' is not defined' error, then do:
 ```sudo pip uninstall pyparsing```
