@@ -23,6 +23,9 @@
     <link href="https://dl.dropbox.com/s/a719t2xgn5efxp1/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Ruluko' rel='stylesheet' type='text/css' />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -95,98 +98,6 @@
     <!--End Header section  -->
 
 
-    <!--PML Check Section-->
-    <section class="for-full-back color-light " id="about">
-        <div class="container">
-	 
-            <div class="row text-center">
-            <h1>PML Checker Input</h1>
-                <div class="col-md-8 col-md-offset-2">
-                    <h1>PML Checker</h1>
-                    <h4>
-                        <strong>Please input PML Code to be tested.</strong>
-                    </h4>
-
-
-		        <form action="/" method="POST">
-
-		        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                
-                                    <textarea name="text" id="message" required="required" class="form-control" rows="20" placeholder="PML Code"></textarea>
-                              
-                           
-                                    <input type="submit" value="Submit PML Check"></button>
-                               
-                            </div>
-                        </div>
-			</form>
-
-                </div>
-
-            </div>
-
-
-            <div class="row text-center">
-                <div class="col-md-8 col-md-offset-2">
-                    <h2>How to use the PML Checker Tool</h2>
-                    <p>
-                        To use the PML Check tool, you may write or paste your PML code in the text area above.
-		        The PML Check tool will return a list of instances of Miracles, Black Holes, and unnecessary serialization. 
-		    </p>
-                </div>
-
-            </div>
-            <div class="row text-center space-pad">
-                
-                <div class="col-md-4 ">
-
-                    <div class="about-div">
-
-                        <i class="fa fa-briefcase fa-4x color-blue"></i>
-
-
-                        <h3>Check Miracles</h3>
-                        
-
-                    </div>
-
-                </div>
-                <div class="col-md-4 ">
-
-                    <div class="about-div">
-
-                        <i class="fa fa-desktop fa-4x color-blue"></i>
-
-
-                        <h3>Check Blackholes</h3>
-                        
-
-                    </div>
-
-                </div>
-                <div class="col-md-4 ">
-
-                    <div class="about-div">
-
-                        <i class="fa fa-folder fa-4x color-blue"></i>
-
-
-                        <h3>Check Serialization</h3>
-                      </div>
-
-                    </div>
-
-                </div>
-            </div>
-            
-        </div>
-
-
-    </section>  
-   
-    <!--End PML Check Section-->
-
     <!-- File Upload Section-->
     <section class="for-full-back color-white" id="services">
         <div class="container">
@@ -239,18 +150,30 @@
 
 			
     
-		        <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	$(function()
+	{
+	        require(['static/ace-master/lib/ace/ace', 'static/ace-master/lib/ace/ext/language_tools'], function(ace)
+		{
+	       	  	editor = ace.edit("editor");
+	       	 	editor.setTheme("static/ace-master/lib/ace/theme/monokai");
+	       		editor.getSession().setMode("static/ace-master/lib/ace/mode/pml");
+	 		editor.setOptions(
+			{
+        			enableBasicAutocompletion: true,
+        			enableLiveAutocompletion: true
+        	  	});
+        	  	editor.resize();
+     		});
+     		$(window).resize(resizeAce);
+     		resizeAce();
+    	});
+</script>
 
-			<script>
-   			    var editor = ace.edit("editor");
-   			    editor.setTheme("ace/theme/monokai");
-  			    editor.getSession().setMode("ace/mode/javascript");
-			</script>
-
-                    </div>
+</div>
 
 
-                </div>
+</div>
 <p></p>
  <div class="row text-center">
                 <div class="col-md-8 col-md-offset-2">

@@ -22,7 +22,7 @@ app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'svg', 'pml'])
 @app.route('/')
 def main():
 
-    return render_template('index.html')
+    return render_template('index1.html')
 
 
 # For a given file, return whether it's an allowed type or not
@@ -103,6 +103,7 @@ def text2File():
 
 
         output_res, err = process.communicate()
+	output_res = output_res.strip().replace(path+':', "Line number")
         if process.returncode > 0:
             return err
         return render_template('result.html', output = output_res)
