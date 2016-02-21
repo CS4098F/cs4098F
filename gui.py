@@ -4,8 +4,9 @@ import subprocess
 import uuid
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from graphviz import Source
-import pydot
-
+#import pydot
+#import pyparsing 
+import pygraphviz as pgv
 
 CURRENT_DIRECTORY = os.getcwd()
 BUCKET_NAME = "temp_folder"              #directory to store files
@@ -54,16 +55,27 @@ def upload_file():
 
             filename2, file_extension = os.path.splitext(filename)
             paths2 = os.path.join(BUCKET_PATH, filename2 + ".dot")
+            
             dot_file = open(paths2, "w")
             dot_file.write(str(output_dot))
             dot_file.close()
+            
+            # using pygraphviz
+            A=pgv.AGraph(paths2)
+            # set some default node attributes
+            A.node_attr['style']='filled'
+            A.node_attr['shape']='circle'
+            #A.node_attr['fixedsize']='true'
+            A.node_attr['color']='red'
 
-            graph = pydot.graph_from_dot_file(paths2)
+            A.write('temp_folder/'+filename2+".dot") # write to simple.dot
+            A.draw('temp_folder/'+ filename2+'.svg',prog="circo") # draw to png using circo
+
             
-            #node_a = pydot.Node("Node A", style="filled", fillcolor="red")
-            #graph.add_node(node_a)
-            
-            graph.write_svg('temp_folder/' + filename2 + '.svg')
+            # using pydot
+            #graph = pydot.graph_from_dot_file(paths2)
+            #graph = pydot.graph_from_dot_file(paths2)
+            #graph.write_svg('temp_folder/' + filename2 + '.svg')
 
 
             listFiles = url_for('uploaded_file',filename=filename2 + '.svg')
