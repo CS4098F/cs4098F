@@ -28,7 +28,8 @@ v) sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev
 
 ```sudo pip install pygraphviz```
 If pygraphviz fails to install then do ```sudo apt-get install python-dev``` and ```sudo apt-get install libgraphviz-dev```
-and try again to install pygraphviz
+and try again to install pygraphviz. There is a chance of another errorcalled undefined symbol: Agundirected. Then to fix this do - 
+``` pip uninstall pygraphviz``` then check your paths with ```pkg-config --libs-only-L libcgraph```  ```pkg-config --cflags-only-I libcgraph``` should tell the path to the library. Then suing the path do ```pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/" ```
 
 
 
