@@ -27,7 +27,8 @@ v) sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev
 ```sudo pip install graphviz```
 
 ```sudo pip install pygraphviz```
-If pygraphviz fails to install then do ```sudo apt-get install python-dev``` and try again
+If pygraphviz fails to install then do ```sudo apt-get install python-dev``` and ```sudo apt-get install libgraphviz-dev```
+and try again to install pygraphviz
 
 
 
