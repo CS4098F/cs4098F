@@ -21,7 +21,7 @@ p {
 <body>
 	 <div class="jumbotron">
             <h1>PML Checker Output</h1>
-            <p><p>{{result}}</p></p>
+            <p><p>{{output}}</p></p>
             </p>
         </div>
 

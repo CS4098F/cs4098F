@@ -21,7 +21,6 @@ app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'svg', 'pml'])
 
 @app.route('/')
 def main():
-
     return render_template('index1.html')
 
 
@@ -33,80 +32,53 @@ def allowed_file(filename):
 
 @app.route('/temp_folder/<filename>')
 def uploaded_file(filename):
+
     return send_from_directory(BUCKET_PATH, filename)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-    if request.method == 'POST':
-        files = request.files['file']
+	if request.method == 'POST':
+            files = request.files['file']
         if files:
             out_data = files.read()
             filename = files.filename
-            paths = os.path.join(BUCKET_PATH, filename)
+            path = os.path.join(BUCKET_PATH, filename)
 
-            file_handle = open(paths, "w")
+            file_handle = open(path, "w")
             #write data to file
             file_handle.write(out_data)
             file_handle.close()
 
-            process = subprocess.Popen(["peos/pml/graph/traverse" , '-n',filename],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            output_dot = process.communicate()[0]
-
-            filename2, file_extension = os.path.splitext(filename)
-            paths2 = os.path.join(BUCKET_PATH, filename2 + ".dot")
-            
-            dot_file = open(paths2, "w")
-            dot_file.write(str(output_dot))
-            dot_file.close()
-            
-            # using pygraphviz
-            A=pgv.AGraph(paths2)
-            # set some default node attributes
-            A.node_attr['style']='filled'
-            A.node_attr['shape']='circle'
-            #A.node_attr['fixedsize']='true'
-            A.node_attr['color']='red'
-
-            A.write('temp_folder/'+filename2+".dot") # write to simple.dot
-            A.draw('temp_folder/'+ filename2+'.svg',prog="circo") # draw to png using circo
-
-            
-            # using pydot
-            #graph = pydot.graph_from_dot_file(paths2)
-            #graph = pydot.graph_from_dot_file(paths2)
-            #graph.write_svg('temp_folder/' + filename2 + '.svg')
-
-
-            listFiles = url_for('uploaded_file',filename=filename2 + '.svg')
-
-
-            return render_template('editor.html', output = out_data, output_dot = output_dot, path = listFiles)
+            return render_template("index1.html", output = out_data)
         else:
-            return redirect('/')
+            return redirect("/")
 
 
+@app.route("/pmlcheck", methods=['POST'])
+def pmlcheck():
+ 	text = request.form["text"]
+	if text:
+		filename = str(uuid.uuid4())
+		path = os.path.join(BUCKET_PATH, filename)
 
-@app.route("/text2File", methods=['POST'])
-def text2File():
-    text = request.form["text"]
-    if text:
-        filename = str(uuid.uuid4())
-        path = os.path.join(BUCKET_PATH, filename)
-
-        file_handle = open(path, "w")
-        #save input file to local temp file
-        file_handle.write(text)
-        file_handle.close()
-
-        process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    	file_handle = open(path, "w")
+    	#save input file to local temp file
+    	file_handle.write(text)
+    	file_handle.close()
 
 
-        output_res, err = process.communicate()
-	output_res = output_res.strip().replace(path+':', "Line number")
-        if process.returncode > 0:
-            return err
-        return render_template('result.html', output = output_res)
+    	process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    	#except OSError as error:
+    	#    return error
+
+    	output_res, err = process.communicate()
+	output_res = "No errors detected"
+	err = err.strip().replace(path+':', "Line number ")
+    	if process.returncode > 0:
+        	return render_template('index1.html', result = err, output = text)
+    	return render_template('index1.html', result = output_res, output = text)
 
 
 if __name__ == "__main__":

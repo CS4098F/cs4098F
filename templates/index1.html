@@ -26,6 +26,7 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src='https://rawgithub.com/eligrey/FileSaver.js/master/FileSaver.js'></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -52,16 +53,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#home">PML GUI</a>
+                <a class="navbar-brand" href="http://127.0.0.1:5000">PML GUI</a>
             </div>
             <!-- Collect the nav links for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#home">HOME</a>
-                    </li>
-                    <li><a href="#about">PML Checker</a>
-                    </li>
-                    <li><a href="#services">File Upload</a>
+                    <li><a href="http://127.0.0.1:5000">HOME</a>
                     </li>
                 </ul>
             </div>
@@ -72,46 +69,13 @@
     <!--End Navigation -->
 
 
-    <!--Header section  -->
-    <div class="container" id="home">
-        <div class="row text-center ">
-             <div class="col-md-4 head-main ">             
-                            <i class="fa fa-bell color-blue "></i>
-                         <h3>  <a href="#home">HOME</a></h3>
-   
-                 </div>
-            <div class="col-md-4 head-main">
-    
-                          <i class="fa fa-edit color-blue "></i>
-                         <h3>  <a href="#about">PML Checker</a></h3>
-       
-                 </div>
-             <div class="col-md-4 head-main">
-
-                        <i class="fa fa-globe color-blue "></i>
-                         <h3>  <a href="#services">File Upload</a></h3>
-          
-                 </div>
-             
-          </div>
-    </div>
-    <!--End Header section  -->
-
-
     <!-- File Upload Section-->
     <section class="for-full-back color-white" id="services">
         <div class="container">
 
-            <div class="row text-center">
-                <div class="col-md-8 col-md-offset-2">
-                    <h1>File Upload and Code Editor</h1>
-                    <h4>
-                        <strong>Please select a PML file to be uploaded.
-                        </strong>
-                    </h4>
-                </div>
-
-            </div>
+           <br></br>
+  <br></br>
+  
 
 	<center>
             <form action="/upload" method="POST" enctype=multipart/form-data>
@@ -119,77 +83,110 @@
             <input type=submit value=Upload>
             </form>
 	</center>
-		
+	
             <p></p>
             <div class="row  space-pad">
                 <div class="col-md-8 col-md-offset-2">
 
+		
+		
+            	
                     <div class="about-div2  ">
+                        <div  id="editor">{{output}}</div>
+			
 
-
-                        <div id="editor">process Diabetes_assessment {
-        action Assess_patient_symptoms {
-                requires {patient_symptoms}
-                provides {assessment.suspect_diabetes}
-        }
-        branch {
-                action Glucose_test {
-                        requires {assessment.suspect_diabetes}
-                        provides {blood_test.glucose_test}
-                }
-                action Cholesterol_test {
-                        requires {assessment.suspect_diabetes}
-                        provides {blood_test.cholesterol_test}
-                }
-        }
-        action Assess_diabetes {
-                requires {blood_test.glucose_test && (optional) blood_test.cholesterol_test}
-                provides {diagnosis.diabetes}
-        }
-}</div>
+	
+		
 
 			
     
-<script>
-	$(function()
-	{
-	        require(['static/ace-master/lib/ace/ace', 'static/ace-master/lib/ace/ext/language_tools'], function(ace)
-		{
-	       	  	editor = ace.edit("editor");
-	       	 	editor.setTheme("static/ace-master/lib/ace/theme/monokai");
-	       		editor.getSession().setMode("static/ace-master/lib/ace/mode/pml");
-	 		editor.setOptions(
-			{
-        			enableBasicAutocompletion: true,
-        			enableLiveAutocompletion: true
-        	  	});
-        	  	editor.resize();
-     		});
-     		$(window).resize(resizeAce);
-     		resizeAce();
-    	});
-</script>
 
 </div>
 
 
+
 </div>
+
+
 <p></p>
+
  <div class="row text-center">
+	
                 <div class="col-md-8 col-md-offset-2">
-                    <h2>How to use the PML Code Editor</h2>
+<p></p>
+<textarea name="error" id="error" class="form-control" rows="1" disabled="disabled" placeholder="Error Messages will be reported here">{{result}}</textarea>
+<p></p>
+<form action="/pmlcheck" method="POST">
+                    <textarea class="col-md-6" name="text" id="content" rows="5" cols="70" style="display:none" required="required"></textarea>
+             <input type="submit" value="Submit Error Check"></button>
+			</form>
+            
+                    <h2>How to use</h2>
                     <p>
-                        Upload a suitable PML file using the Upload button above.
-			Your PML code will be loaded into the Code Editor, where you can edit and save your code for usage later. 
+                        You can upload a suitable PML file using the Upload button above.
+			Your PML code will be loaded into the Code Editor, where you can edit and check the your code for correct syntax before generating a diagram of your code.
+			Alternatively, you can use the Code Editor on this page without needing to upload a preexisting PML file.  
 		    </p>
                 </div>
 
             </div>
                              
             </div>
-            
+
         </div>
 
+<script>
+	
+
+   
+   
+   
+
+   
+
+   
+</script>
+
+<script>
+	
+	$(function()
+	{
+	        require(['static/ace-master/lib/ace/ace', 'static/ace-master/lib/ace/ext/language_tools'], function(ace)
+
+		{
+			var textarea = $('#content');
+	       	  	editor = ace.edit("editor");
+	       	 	editor.setTheme("static/ace-master/lib/ace/theme/monokai");
+	       		editor.getSession().setMode("static/ace-master/lib/ace/mode/pml");
+			editor.getSession().on('change', function () {
+      				 textarea.val(editor.getSession().getValue());
+			});
+			textarea.val(editor.getSession().getValue());
+	 		editor.setOptions(
+			{
+        			enableBasicAutocompletion: true,
+        			enableLiveAutocompletion: true
+        	  	});
+        	  	editor.resize();
+			var button;
+          		button = document.getElementById('btnSave');
+          		button.addEventListener('click', function (e) {
+          		var outputXmlStr, blob;
+          		outputXmlStr = editor.getSession().getValue();
+          		// If the string is null or empty, do nothing.
+          		if (!outputXmlStr)
+                		return;
+                	blob = new Blob([outputXmlStr], { type: 'text/plain' });
+               		// Use the FileSaver.js interface to download the file.
+               		saveAs(blob, 'tempfile.pml');
+            		});
+     		});
+     		$(window).resize(resizeAce);
+		
+           		
+     		resizeAce();
+    	});
+</script>
 
     </section>
 
