@@ -54,6 +54,49 @@ def upload_file():
         else:
             return redirect("/")
 
+@app.route("/graph", methods=['GET', 'POST'])
+def graph():
+	    text = request.form["text"]
+	    if text:
+	    	filename = str(uuid.uuid4())
+		paths = os.path.join(BUCKET_PATH, filename)
+
+    	   	file_handle = open(paths, "w")
+    	   	#save input file to local temp file
+           	file_handle.write(text)
+    	   	file_handle.close()
+	
+	        process = subprocess.Popen(["peos/pml/graph/traverse" , '-n',paths],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	        output_dot = process.communicate()[0]
+		
+	
+          	filename2, file_extension = os.path.splitext(filename)
+         	paths2 = os.path.join(BUCKET_PATH, filename2 + ".dot")
+            
+        	dot_file = open(paths2, "w")
+       		dot_file.write(str(output_dot))
+       		dot_file.close()
+            
+       		# using pygraphviz
+       		A=pgv.AGraph(paths2)
+        	# set some default node attributes
+       		A.node_attr['style']='filled'
+       		A.node_attr['shape']='circle'
+       		#A.node_attr['fixedsize']='true'
+       		A.node_attr['color']='red'
+
+       		A.write('temp_folder/'+filename2+".dot") # write to simple.dot
+        	A.draw('temp_folder/'+ filename2+'.svg',prog="circo") # draw to png using circo
+
+
+	        listFiles = url_for('uploaded_file',filename=filename2 + '.svg')
+
+
+        	return render_template('editor.html', output_dot = output_dot, out = listFiles)
+       	    else:
+         	return redirect('/')
+
+
 
 @app.route("/pmlcheck", methods=['POST'])
 def pmlcheck():
@@ -78,7 +121,7 @@ def pmlcheck():
 	err = err.strip().replace(path+':', "Line number ")
     	if process.returncode > 0:
         	return render_template('index1.html', result = err, output = text)
-    	return render_template('index1.html', result = output_res, output = text)
+    	return render_template('graph.html', result = output_res, output = text)
 
 
 if __name__ == "__main__":

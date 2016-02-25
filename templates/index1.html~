@@ -114,12 +114,13 @@
 	
                 <div class="col-md-8 col-md-offset-2">
 <p></p>
-<textarea name="error" id="error" class="form-control" rows="1" disabled="disabled" placeholder="Error Message">{{result}}</textarea>
+<textarea name="error" id="error" class="form-control" rows="1" disabled="disabled" placeholder="Error Messages will be reported here">{{result}}</textarea>
 <p></p>
 <form action="/pmlcheck" method="POST">
                     <textarea class="col-md-6" name="text" id="content" rows="5" cols="70" style="display:none" required="required"></textarea>
-             <input type="submit" value="Submit PML Check"></button>
+             <input type="submit" value="Submit Error Check"></button>
 			</form>
+	<button class="btn btn-primary" id="toggletextarea-btn">Hide TextArea</button>
             
                     <h2>How to use</h2>
                     <p>
@@ -162,6 +163,12 @@
       				 textarea.val(editor.getSession().getValue());
 			});
 			textarea.val(editor.getSession().getValue());
+			$("#toggletextarea-btn").on('click', function () {
+      				$("#toggletextarea-btn").toggle();
+      				$(this).text(function (i, text) {
+        				return text === "Show Content" ? "Hide Content" : "Show Content";
+       				});
+  			});
 	 		editor.setOptions(
 			{
         			enableBasicAutocompletion: true,
