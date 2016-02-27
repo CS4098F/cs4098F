@@ -16,7 +16,7 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 
 ## 2:Install library dependencies for the app :
-```sudo apt-get install graphviz git python-pip libgraphviz-dev pkg-config python-dev```
+```sudo apt-get install graphviz git python-pip libgraphviz-dev pkg-config python-dev python3-tk```
 
 ```sudo pip install flask```
 
@@ -31,7 +31,7 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 2- ```cd``` into cs4098F folder. Run ```git submodule update --init --recursive```
 
-3- ```cd peos``` and execute  ```sudo make```  on terminal where the Makefile is
+3- ```cd peos``` and execute  ```make```  on terminal where the Makefile is
 
 4- go back just one level```cd ..```and run ```python gui.py``` 
 
