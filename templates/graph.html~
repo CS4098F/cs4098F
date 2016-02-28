@@ -63,6 +63,10 @@
                     <li><a href="http://127.0.0.1:5000">HOME</a>
                     </li>
                 </ul>
+		<ul class="nav navbar-nav navbar-left">
+                    <li><a href="#" onClick="history.go(-1);return true;">BACK TO PREVIOUS</a>
+                    </li>
+                </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -76,14 +80,19 @@
         <div class="container">
 
 
-		<object type="image/svg+xml">
-  <img src="{{out}}" />
-</object>
+		
 
 
 	
            <br></br>
-  <br></br>
+<center>
+<h2>How to use</h2>
+                    <p>
+                        You can generate a graph of choice from the selections below.
+			To alter your code with the Code Editor, please return to the previous page with the BACK button above. 
+		    </p>
+</center>
+  
   
 
 	<center>
@@ -94,6 +103,7 @@
 	</center>
 	
             <p></p>
+
             <div class="row  space-pad">
                 <div class="col-md-8 col-md-offset-2">
 
@@ -105,6 +115,7 @@
 			
 
 	
+			
 		
 
 			
@@ -124,19 +135,14 @@
                 <div class="col-md-8 col-md-offset-2">
 <p></p>
 <textarea name="error" id="error" class="form-control" rows="1" disabled="disabled" placeholder="Error Messages will be reported here">{{result}}</textarea>
-<p></p>
-<form action="/graph" method="POST">
+<center><embed src= {{imgpath}} width="700" height="600" type='application/svg'><center>
+<form action="/pmlcheck" method="POST">
                     <textarea class="col-md-6" name="text" id="content" rows="5" cols="70" style="display:none" required="required"></textarea>
              <input type="submit" value="Create Graph"></button>
 			</form>
 
             
-                    <h2>How to use</h2>
-                    <p>
-                        You can upload a suitable PML file using the Upload button above.
-			Your PML code will be loaded into the Code Editor, where you can edit and check the your code for correct syntax before generating a diagram of your code.
-			Alternatively, you can use the Code Editor on this page without needing to upload a preexisting PML file.  
-		    </p>
+                    
                 </div>
 
             </div>
@@ -170,6 +176,7 @@
 			editor.getSession().on('change', function () {
       				 textarea.val(editor.getSession().getValue());
 			});
+			editor.setReadOnly(true)
 			textarea.val(editor.getSession().getValue());
 	 		editor.setOptions(
 			{

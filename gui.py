@@ -1,5 +1,5 @@
 import json
-import os, sys
+import os, sys, tempfile
 import subprocess
 import uuid
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
@@ -56,53 +56,39 @@ def upload_file():
 
 @app.route("/graph", methods=['GET', 'POST'])
 def graph():
-	    text = request.form["text"]
-	    if text:
-	    	filename = str(uuid.uuid4())
-		paths = os.path.join(BUCKET_PATH, filename)
+	     with tempfile.NamedTemporaryFile(mode='w+t', suffix='.dot') as file_handle:
+        	fname = file_handle.name
 
-    	   	file_handle = open(paths, "w")
-    	   	#save input file to local temp file
-           	file_handle.write(text)
-    	   	file_handle.close()
-	
-	        process = subprocess.Popen(["peos/pml/graph/traverse" , '-n',paths],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-	        output_dot = process.communicate()[0]
-		
-	
-          	filename2, file_extension = os.path.splitext(filename)
-         	paths2 = os.path.join(BUCKET_PATH, filename2 + ".dot")
-            
-        	dot_file = open(paths2, "w")
-       		dot_file.write(str(output_dot))
+       		file_handle.write(request.form["text"])
+       		file_handle.flush()
+
+       		process = subprocess.Popen(["peos/pml/graph/traverse" , '-n',fname],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+       		output_dot = process.communicate()[0]
+    
+       		dot_file = open(path, "w")
+       		dot_file.write(output_dot)
        		dot_file.close()
-            
-       		# using pygraphviz
-       		A=pgv.AGraph(paths2)
-        	# set some default node attributes
-       		A.node_attr['style']='filled'
-       		A.node_attr['shape']='circle'
-       		#A.node_attr['fixedsize']='true'
-       		A.node_attr['color']='red'
 
-       		A.write('temp_folder/'+filename2+".dot") # write to simple.dot
-        	A.draw('temp_folder/'+ filename2+'.svg',prog="circo") # draw to png using circo
+       		A=pgv.AGraph(output_dot)
+       		A.write('temp_folder/'+filename+".dot") # write to simple.dot
+        	A.draw('temp_folder/'+ filename+'.svg',prog="circo") # draw to png using circo
+        
 
+       		listFiles = url_for('uploaded_file',filename=filename + '.svg')
 
-	        listFiles = url_for('uploaded_file',filename=filename2 + '.svg')
-
-
-        	return render_template('editor.html', output_dot = output_dot, out = listFiles)
-       	    else:
-         	return redirect('/')
+        	return render_template('graph.html', result = output_res, output = text, imgpath = listFiles)
+       	 
 
 
 
 @app.route("/pmlcheck", methods=['POST'])
 def pmlcheck():
+	global text
  	text = request.form["text"]
 	if text:
+		global filename
 		filename = str(uuid.uuid4())
+		global path
 		path = os.path.join(BUCKET_PATH, filename)
 
     	file_handle = open(path, "w")
@@ -111,17 +97,19 @@ def pmlcheck():
     	file_handle.close()
 
 
-    	process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-    	#except OSError as error:
-    	#    return error
-
+    	process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)  	
+	global output_res
     	output_res, err = process.communicate()
+    	
 	output_res = "No errors detected"
-	err = err.strip().replace(path+':', "Line number ")
+        
+	err = err.strip().replace(path +':', "Line number ")
     	if process.returncode > 0:
         	return render_template('index1.html', result = err, output = text)
     	return render_template('graph.html', result = output_res, output = text)
+
+        	
+    	
 
 
 if __name__ == "__main__":

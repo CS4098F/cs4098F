@@ -73,8 +73,15 @@
     <section class="for-full-back color-white" id="services">
         <div class="container">
 
-           <br></br>
-  <br></br>
+           <br></br><center>
+<h2>How to use</h2>
+                    <p>
+                        You can upload a suitable PML file using the Upload button below.
+			Your PML code will be loaded into the Code Editor, where you can edit and check the your code for correct syntax before generating a diagram of your code.
+			Alternatively, you can use the Code Editor on this page without needing to upload a preexisting PML file.  
+		    </p>
+</center>
+
   
 
 	<center>
@@ -120,14 +127,8 @@
                     <textarea class="col-md-6" name="text" id="content" rows="5" cols="70" style="display:none" required="required"></textarea>
              <input type="submit" value="Submit Error Check"></button>
 			</form>
-	<button class="btn btn-primary" id="toggletextarea-btn">Hide TextArea</button>
             
-                    <h2>How to use</h2>
-                    <p>
-                        You can upload a suitable PML file using the Upload button above.
-			Your PML code will be loaded into the Code Editor, where you can edit and check the your code for correct syntax before generating a diagram of your code.
-			Alternatively, you can use the Code Editor on this page without needing to upload a preexisting PML file.  
-		    </p>
+                    
                 </div>
 
             </div>
@@ -163,12 +164,6 @@
       				 textarea.val(editor.getSession().getValue());
 			});
 			textarea.val(editor.getSession().getValue());
-			$("#toggletextarea-btn").on('click', function () {
-      				$("#toggletextarea-btn").toggle();
-      				$(this).text(function (i, text) {
-        				return text === "Show Content" ? "Hide Content" : "Show Content";
-       				});
-  			});
 	 		editor.setOptions(
 			{
         			enableBasicAutocompletion: true,
