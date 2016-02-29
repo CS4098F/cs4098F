@@ -62,7 +62,8 @@ def graph():
        		file_handle.write(request.form["text"])
        		file_handle.flush()
 
-       		process = subprocess.Popen(["peos/pml/graph/traverse" , '-n',fname],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+       		process = subprocess.Popen(["peos/pml/graph/traverse" , '-n',fname],stdin=subprocess.PIPE,
+									   stdout=subprocess.PIPE, stderr=subprocess.PIPE)
        		output_dot = process.communicate()[0]
     
        		dot_file = open(path, "w")
@@ -97,9 +98,14 @@ def pmlcheck():
     	file_handle.close()
 
 
-    	process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)  	
+    	process = subprocess.Popen(["peos/pml/check/pmlcheck",path],stdin=subprocess.PIPE,
+								   stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	global output_res
     	output_res, err = process.communicate()
+		#create analysis file
+    	analysis_file = open(path+".analysis", "w")
+    	analysis_file.write(output_res)
+    	analysis_file.close()
     	
 	output_res = "No errors detected"
         
