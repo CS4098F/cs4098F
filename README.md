@@ -40,3 +40,22 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 5- go to ```http://127.0.0.1:5000/`` in browser to start app
 
 
+## Features Implemented:
+
+File Upload
+
+Syntax Analysis
+
+Resource Flow
+
+
+## Features in Testing:
+
+Analysis Colored Actions
+
+
+## Features in Production:
+
+Social Network
+
+Agent Colored Actions 
