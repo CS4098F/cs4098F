@@ -170,18 +170,6 @@
         			enableLiveAutocompletion: true
         	  	});
         	  	editor.resize();
-			var button;
-          		button = document.getElementById('btnSave');
-          		button.addEventListener('click', function (e) {
-          		var outputXmlStr, blob;
-          		outputXmlStr = editor.getSession().getValue();
-          		// If the string is null or empty, do nothing.
-          		if (!outputXmlStr)
-                		return;
-                	blob = new Blob([outputXmlStr], { type: 'text/plain' });
-               		// Use the FileSaver.js interface to download the file.
-               		saveAs(blob, 'tempfile.pml');
-            		});
      		});
      		$(window).resize(resizeAce);
 		
