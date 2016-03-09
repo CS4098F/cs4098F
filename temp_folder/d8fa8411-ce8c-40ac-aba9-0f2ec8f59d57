@@ -1,0 +1,80 @@
+digraph tmpDCARLj {
+process [shape=plaintext, label="/tmp/tmpDCARLj"];
+29803328 [shape=plain, label="start"]
+29803888 [shape=box, style=rounded, label="Guidelines_For_Treatment_Of_Patients ->\nidentify_causal_or_exacerbating_factors\n-> []"];
+29804352 [shape=box, style=rounded, label="patient_record.Confirmed_Dementia && patient_record.requests_privacy == false ->\nprovide_patient_carer_with_information\n-> information_to_carer"];
+29805792 [shape=box, style=rounded, label="patient_history ->\ncreate_treatment_or_care_plan\n-> care_plan"];
+29807488 [shape=box, style=rounded, label="care_plan ->\nformal_review_of_care_plan\n-> care_plan.reviewed == true"];
+29808256 [shape=box, style=rounded, label="[] ->\nassess_carer_needs\n-> care_plan.respite_care"];
+29808752 [shape=circle, fixedsize = true, style=filled, label=""];
+{ rank = same;
+29809264 [shape=circle, fixedsize = true, style=filled, label=""];
+29811664 [shape=circle, fixedsize = true, style=filled, label=""];
+}
+{ rank = same;
+29809824 [shape=box, style=rounded, label="[] ->\nnon_medication_interventions\n-> support_for_carer && info_about_servicesAndInterventions && optional (qual) cognitive_simulation"];
+29810896 [shape=box, style=rounded, label="intangible (qual) carer_view_on_patient_condition ->\nmedication_interventions\n-> prescription"];
+}
+29809504 [shape=circle, fixedsize = true, style=filled, label=""];
+29808960 [shape=circle, fixedsize = true, style=filled, label=""];
+29813520 [shape=box, style=rounded, label="[] ->\nobtain_carers_view\n-> intangible (qual) view_on_condition"];
+29813952 [shape=box, style=rounded, label="[] ->\ndocument_symptoms\n-> patient_record.symptoms"];
+29814496 [shape=box, style=rounded, label="intangible (qual) risk_of_behavioural_disturbance ->\nassess_behavioural_disturbances\n-> care_plan.appropriate_setting"];
+29815152 [shape=circle, fixedsize = true, style=filled, label=""];
+{ rank = same;
+29815664 [shape=box, style=rounded, label="[] ->\nrecord_changes\n-> patient_record.symptoms && optional (qual) medication"];
+29816368 [shape=box, style=rounded, label="[] ->\nmonitor_patients_on_medication\n-> optional (qual) care_plan.medication"];
+29818256 [shape=box, style=rounded, label="[] ->\nmanage_comorbidity\n-> comorbidity.depression && comorbidity.psychosis && comorbidity.delirium && comorbidity.parkinsons_disease && comorbidity.stroke"];
+}
+29815664 [shape=box, style=rounded, label="[] ->\nrecord_changes\n-> patient_record.symptoms && optional (qual) medication"];
+29815360 [shape=circle, fixedsize = true, style=filled, label=""];
+29803568 [shape=plain, label="end"]
+29816944 [shape=box, style=rounded, label="patient_record.disability || patient_record.sensory_impairment || patient_record.lingustic_problems || patient_record.speech_problems ->\nconsider_alt_assessments\n-> care_plan.alternative_assessment_method"];
+29816368 [shape=box, style=rounded, label="[] ->\nmonitor_patients_on_medication\n-> optional (qual) care_plan.medication"];
+29815360 [shape=circle, fixedsize = true, style=filled, label=""];
+29820096 [shape=box, style=rounded, label="comorbidity.depression || comorbidity.anxiety ->\npsychosocial_interventions\n-> []"];
+29818256 [shape=box, style=rounded, label="[] ->\nmanage_comorbidity\n-> comorbidity.depression && comorbidity.psychosis && comorbidity.delirium && comorbidity.parkinsons_disease && comorbidity.stroke"];
+29815360 [shape=circle, fixedsize = true, style=filled, label=""];
+29809504 [shape=circle, fixedsize = true, style=filled, label=""];
+{ rank = same;
+29812112 [shape=box, style=rounded, label="intangible (qual) non_cognitive_symptoms || intangible (qual) challenging_behaviour ->\nnon_medication_interventions\n-> early_assessment"];
+29813008 [shape=box, style=rounded, label="intangible (qual) risk_of_harm_or_distress ->\nmedication_interventions\n-> medication"];
+}
+29811840 [shape=circle, fixedsize = true, style=filled, label=""];
+29808960 [shape=circle, fixedsize = true, style=filled, label=""];
+29811840 [shape=circle, fixedsize = true, style=filled, label=""];
+29803328 -> 29803888 [weight=1, style=solid] ;
+29803888 -> 29804352 [weight=1, style=solid] ;
+29804352 -> 29805792 [weight=1, style=solid] ;
+29805792 -> 29807488 [weight=1, style=solid] ;
+29807488 -> 29808256 [weight=1, style=solid] ;
+29808256 -> 29808752 [weight=1, style=solid] ;
+29808752 -> 29809264 [weight=1, style=solid] ;
+29809264 -> 29809824 [weight=1, style=solid] ;
+29809824 -> 29809504 [weight=1, style=solid] ;
+29809504 -> 29808960 [weight=1, style=solid] ;
+29808960 -> 29813520 [weight=1, style=solid] ;
+29813520 -> 29813952 [weight=1, style=solid] ;
+29813952 -> 29814496 [weight=1, style=solid] ;
+29814496 -> 29815152 [weight=1, style=solid] ;
+29815152 -> 29815664 [weight=1, style=solid] ;
+29815664 -> 29815664 [weight=0] ;
+29815664 -> 29815360 [weight=1, style=solid] ;
+29815360 -> 29803568 [weight=1, style=solid] ;
+29815152 -> 29816368 [weight=1, style=solid] ;
+29816368 -> 29816944 [weight=1, style=solid] ;
+29816944 -> 29816368 [weight=0] ;
+29816944 -> 29815360 [weight=1, style=solid] ;
+29815152 -> 29818256 [weight=1, style=solid] ;
+29818256 -> 29820096 [weight=1, style=solid] ;
+29820096 -> 29818256 [weight=0] ;
+29820096 -> 29815360 [weight=1, style=solid] ;
+29809264 -> 29810896 [weight=1, style=solid] ;
+29810896 -> 29809504 [weight=1, style=solid] ;
+29808752 -> 29811664 [weight=1, style=solid] ;
+29811664 -> 29812112 [weight=1, style=solid] ;
+29812112 -> 29811840 [weight=1, style=solid] ;
+29811840 -> 29808960 [weight=1, style=solid] ;
+29811664 -> 29813008 [weight=1, style=solid] ;
+29813008 -> 29811840 [weight=1, style=solid] ;
+}

@@ -1,4 +1,5 @@
 import json
+import codecs
 import os, sys, tempfile
 import subprocess
 import uuid
@@ -7,6 +8,10 @@ from graphviz import Source
 #import pydot
 #import pyparsing 
 import pygraphviz as pgv
+
+
+reload(sys)  
+sys.setdefaultencoding('utf8')
 
 CURRENT_DIRECTORY = os.getcwd()
 BUCKET_NAME = "temp_folder"              #directory to store files

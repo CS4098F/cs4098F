@@ -1,0 +1,163 @@
+digraph tmpDCARLj {
+	{
+		graph [rank=same];
+		29809264		 [fixedsize=true,
+			shape=circle,
+			style=filled];
+		29811664		 [fixedsize=true,
+			shape=circle,
+			style=filled];
+	}
+	{
+		graph [rank=same];
+		29809824		 [label="[] ->\nnon_medication_interventions\n-> support_for_carer && info_about_servicesAndInterventions && optional (qual) cognitive_simulation",
+			shape=box,
+			style=rounded];
+		29810896		 [label="intangible (qual) carer_view_on_patient_condition ->\nmedication_interventions\n-> prescription",
+			shape=box,
+			style=rounded];
+	}
+	{
+		graph [rank=same];
+		29815664		 [label="[] ->\nrecord_changes\n-> patient_record.symptoms && optional (qual) medication",
+			shape=box,
+			style=rounded];
+		29816368		 [label="[] ->\nmonitor_patients_on_medication\n-> optional (qual) care_plan.medication",
+			shape=box,
+			style=rounded];
+		29818256		 [label="[] ->\nmanage_comorbidity\n-> comorbidity.depression && comorbidity.psychosis && comorbidity.delirium && comorbidity.parkinsons_\
+disease && comorbidity.stroke",
+			shape=box,
+			style=rounded];
+	}
+	{
+		graph [rank=same];
+		29812112		 [label="intangible (qual) non_cognitive_symptoms || intangible (qual) challenging_behaviour ->\nnon_medication_interventions\n-> early_assessment",
+			shape=box,
+			style=rounded];
+		29813008		 [label="intangible (qual) risk_of_harm_or_distress ->\nmedication_interventions\n-> medication",
+			shape=box,
+			style=rounded];
+	}
+	process	 [label="/tmp/tmpDCARLj",
+		shape=plaintext];
+	29803328	 [label=start,
+		shape=plain];
+	29803888	 [label="Guidelines_For_Treatment_Of_Patients ->\nidentify_causal_or_exacerbating_factors\n-> []",
+		shape=box,
+		style=rounded];
+	29803328 -> 29803888	 [style=solid,
+		weight=1];
+	29804352	 [label="patient_record.Confirmed_Dementia && patient_record.requests_privacy == false ->\nprovide_patient_carer_with_information\n-> information_\
+to_carer",
+		shape=box,
+		style=rounded];
+	29803888 -> 29804352	 [style=solid,
+		weight=1];
+	29805792	 [label="patient_history ->\ncreate_treatment_or_care_plan\n-> care_plan",
+		shape=box,
+		style=rounded];
+	29804352 -> 29805792	 [style=solid,
+		weight=1];
+	29807488	 [label="care_plan ->\nformal_review_of_care_plan\n-> care_plan.reviewed == true",
+		shape=box,
+		style=rounded];
+	29805792 -> 29807488	 [style=solid,
+		weight=1];
+	29808256	 [label="[] ->\nassess_carer_needs\n-> care_plan.respite_care",
+		shape=box,
+		style=rounded];
+	29807488 -> 29808256	 [style=solid,
+		weight=1];
+	29808752	 [fixedsize=true,
+		shape=circle,
+		style=filled];
+	29808256 -> 29808752	 [style=solid,
+		weight=1];
+	29808752 -> 29809264	 [style=solid,
+		weight=1];
+	29808752 -> 29811664	 [style=solid,
+		weight=1];
+	29809264 -> 29809824	 [style=solid,
+		weight=1];
+	29809264 -> 29810896	 [style=solid,
+		weight=1];
+	29811664 -> 29812112	 [style=solid,
+		weight=1];
+	29811664 -> 29813008	 [style=solid,
+		weight=1];
+	29809504	 [fixedsize=true,
+		shape=circle,
+		style=filled];
+	29809824 -> 29809504	 [style=solid,
+		weight=1];
+	29810896 -> 29809504	 [style=solid,
+		weight=1];
+	29808960	 [fixedsize=true,
+		shape=circle,
+		style=filled];
+	29809504 -> 29808960	 [style=solid,
+		weight=1];
+	29813520	 [label="[] ->\nobtain_carers_view\n-> intangible (qual) view_on_condition",
+		shape=box,
+		style=rounded];
+	29808960 -> 29813520	 [style=solid,
+		weight=1];
+	29813952	 [label="[] ->\ndocument_symptoms\n-> patient_record.symptoms",
+		shape=box,
+		style=rounded];
+	29813520 -> 29813952	 [style=solid,
+		weight=1];
+	29814496	 [label="intangible (qual) risk_of_behavioural_disturbance ->\nassess_behavioural_disturbances\n-> care_plan.appropriate_setting",
+		shape=box,
+		style=rounded];
+	29813952 -> 29814496	 [style=solid,
+		weight=1];
+	29815152	 [fixedsize=true,
+		shape=circle,
+		style=filled];
+	29814496 -> 29815152	 [style=solid,
+		weight=1];
+	29815152 -> 29815664	 [style=solid,
+		weight=1];
+	29815152 -> 29816368	 [style=solid,
+		weight=1];
+	29815152 -> 29818256	 [style=solid,
+		weight=1];
+	29815664 -> 29815664	 [weight=0];
+	29815360	 [fixedsize=true,
+		shape=circle,
+		style=filled];
+	29815664 -> 29815360	 [style=solid,
+		weight=1];
+	29816944	 [label="patient_record.disability || patient_record.sensory_impairment || patient_record.lingustic_problems || patient_record.speech_problems \
+->\nconsider_alt_assessments\n-> care_plan.alternative_assessment_method",
+		shape=box,
+		style=rounded];
+	29816368 -> 29816944	 [style=solid,
+		weight=1];
+	29820096	 [label="comorbidity.depression || comorbidity.anxiety ->\npsychosocial_interventions\n-> []",
+		shape=box,
+		style=rounded];
+	29818256 -> 29820096	 [style=solid,
+		weight=1];
+	29803568	 [label=end,
+		shape=plain];
+	29815360 -> 29803568	 [style=solid,
+		weight=1];
+	29816944 -> 29816368	 [weight=0];
+	29816944 -> 29815360	 [style=solid,
+		weight=1];
+	29820096 -> 29818256	 [weight=0];
+	29820096 -> 29815360	 [style=solid,
+		weight=1];
+	29811840	 [fixedsize=true,
+		shape=circle,
+		style=filled];
+	29812112 -> 29811840	 [style=solid,
+		weight=1];
+	29813008 -> 29811840	 [style=solid,
+		weight=1];
+	29811840 -> 29808960	 [style=solid,
+		weight=1];
+}
