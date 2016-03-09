@@ -1,0 +1,18 @@
+digraph tmpAeqkcs {
+process [shape=plaintext, label="/tmp/tmpAeqkcs"];
+24408896 [shape=plain, label="start"]
+24409456 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+24410016 [shape=box, style=rounded, label="scheduled_examination ->\nExamine\n-> examination_results"];
+24409456 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+24410368 [shape=box, style=rounded, label="examination_results ->\nDiagnose\n-> diagnosis"];
+24410912 [shape=box, style=rounded, label="diagnosis ->\nTreat\n-> treatment"];
+24409456 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+24409136 [shape=plain, label="end"]
+24408896 -> 24409456 [weight=1, style=solid] ;
+24409456 -> 24410016 [weight=1, style=solid] ;
+24410016 -> 24409456 [weight=0] ;
+24410016 -> 24410368 [weight=1, style=solid] ;
+24410368 -> 24410912 [weight=1, style=solid] ;
+24410912 -> 24409456 [weight=0] ;
+24410912 -> 24409136 [weight=1, style=solid] ;
+}

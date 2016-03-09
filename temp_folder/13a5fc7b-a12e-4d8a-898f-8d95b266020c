@@ -1,0 +1,18 @@
+digraph tmpFMmW_A {
+process [shape=plaintext, label="/tmp/tmpFMmW_A"];
+23708480 [shape=plain, label="start"]
+23709040 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+23709600 [shape=box, style=rounded, label="scheduled_examination ->\nExamine\n-> examination_results"];
+23709040 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+23709952 [shape=box, style=rounded, label="examination_results ->\nDiagnose\n-> diagnosis"];
+23710496 [shape=box, style=rounded, label="diagnosis ->\nTreat\n-> treatment"];
+23709040 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+23708720 [shape=plain, label="end"]
+23708480 -> 23709040 [weight=1, style=solid] ;
+23709040 -> 23709600 [weight=1, style=solid] ;
+23709600 -> 23709040 [weight=0] ;
+23709600 -> 23709952 [weight=1, style=solid] ;
+23709952 -> 23710496 [weight=1, style=solid] ;
+23710496 -> 23709040 [weight=0] ;
+23710496 -> 23708720 [weight=1, style=solid] ;
+}

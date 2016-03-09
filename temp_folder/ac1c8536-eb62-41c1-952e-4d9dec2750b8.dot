@@ -1,0 +1,32 @@
+digraph tmpAeqkcs {
+	process	 [label="/tmp/tmpAeqkcs",
+		shape=plaintext];
+	24408896	 [label=start,
+		shape=plain];
+	24409456	 [label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination",
+		shape=box,
+		style=rounded];
+	24408896 -> 24409456	 [style=solid,
+		weight=1];
+	24410016	 [label="scheduled_examination ->\nExamine\n-> examination_results",
+		shape=box,
+		style=rounded];
+	24409456 -> 24410016	 [style=solid,
+		weight=1];
+	24410016 -> 24409456	 [weight=0];
+	24410368	 [label="examination_results ->\nDiagnose\n-> diagnosis",
+		shape=box,
+		style=rounded];
+	24410016 -> 24410368	 [style=solid,
+		weight=1];
+	24410912	 [label="diagnosis ->\nTreat\n-> treatment",
+		shape=box,
+		style=rounded];
+	24410368 -> 24410912	 [style=solid,
+		weight=1];
+	24410912 -> 24409456	 [weight=0];
+	24409136	 [label=end,
+		shape=plain];
+	24410912 -> 24409136	 [style=solid,
+		weight=1];
+}

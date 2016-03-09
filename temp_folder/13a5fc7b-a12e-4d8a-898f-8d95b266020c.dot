@@ -1,0 +1,32 @@
+digraph tmpFMmW_A {
+	process	 [label="/tmp/tmpFMmW_A",
+		shape=plaintext];
+	23708480	 [label=start,
+		shape=plain];
+	23709040	 [label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination",
+		shape=box,
+		style=rounded];
+	23708480 -> 23709040	 [style=solid,
+		weight=1];
+	23709600	 [label="scheduled_examination ->\nExamine\n-> examination_results",
+		shape=box,
+		style=rounded];
+	23709040 -> 23709600	 [style=solid,
+		weight=1];
+	23709600 -> 23709040	 [weight=0];
+	23709952	 [label="examination_results ->\nDiagnose\n-> diagnosis",
+		shape=box,
+		style=rounded];
+	23709600 -> 23709952	 [style=solid,
+		weight=1];
+	23710496	 [label="diagnosis ->\nTreat\n-> treatment",
+		shape=box,
+		style=rounded];
+	23709952 -> 23710496	 [style=solid,
+		weight=1];
+	23710496 -> 23709040	 [weight=0];
+	23708720	 [label=end,
+		shape=plain];
+	23710496 -> 23708720	 [style=solid,
+		weight=1];
+}

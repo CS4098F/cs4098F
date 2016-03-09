@@ -81,7 +81,7 @@ def graph():
 
        		listFiles = url_for('uploaded_file',filename=filename + '.svg')
 
-        	return render_template('graph.html', result = text, imgpath = listFiles, )
+        	return render_template('graph.html', result = output_res, imgpath = listFiles, )
        	 
 
 
