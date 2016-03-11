@@ -1,0 +1,18 @@
+digraph tmpT5f7N2 {
+process [shape=plaintext, label="/tmp/tmpT5f7N2"];
+22090560 [shape=plain, label="start"]
+22091120 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+22091680 [shape=box, style=rounded, label="scheduled_examination ->\nExamine\n-> examination_results"];
+22091120 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+22092032 [shape=box, style=rounded, label="examination_results ->\nDiagnose\n-> diagnosis"];
+22092576 [shape=box, style=rounded, label="diagnosis ->\nTreat\n-> treatment"];
+22091120 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+22090800 [shape=plain, label="end"]
+22090560 -> 22091120 [weight=1, style=solid] ;
+22091120 -> 22091680 [weight=1, style=solid] ;
+22091680 -> 22091120 [weight=0] ;
+22091680 -> 22092032 [weight=1, style=solid] ;
+22092032 -> 22092576 [weight=1, style=solid] ;
+22092576 -> 22091120 [weight=0] ;
+22092576 -> 22090800 [weight=1, style=solid] ;
+}

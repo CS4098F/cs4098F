@@ -136,7 +136,7 @@
 <p></p>
 <textarea name="error" id="error" class="form-control" rows="1" disabled="disabled" placeholder="Error Messages will be reported here">{{result}}</textarea>
 <center><embed src= {{imgpath}} width="700" height="600" type='application/svg'><center>
-<form action="/pmlcheck" method="POST">
+<form action="/graph" method="POST">
                     <textarea class="col-md-6" name="text" id="content" rows="5" cols="70" style="display:none" required="required"></textarea>
              <input type="submit" value="Create Graph"></button>
 			</form>

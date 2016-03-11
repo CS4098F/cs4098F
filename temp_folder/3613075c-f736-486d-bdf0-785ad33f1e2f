@@ -1,0 +1,18 @@
+digraph tmptz14vm {
+process [shape=plaintext, label="/tmp/tmptz14vm"];
+33002304 [shape=plain, label="start"]
+33002864 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+33003424 [shape=box, style=rounded, label="scheduled_examination ->\nExamine\n-> examination_results"];
+33002864 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+33003776 [shape=box, style=rounded, label="examination_results ->\nDiagnose\n-> diagnosis"];
+33004320 [shape=box, style=rounded, label="diagnosis ->\nTreat\n-> treatment"];
+33002864 [shape=box, style=rounded, label="reported_symptoms ->\nPresentToSpecialistClinician\n-> scheduled_examination"];
+33002544 [shape=plain, label="end"]
+33002304 -> 33002864 [weight=1, style=solid] ;
+33002864 -> 33003424 [weight=1, style=solid] ;
+33003424 -> 33002864 [weight=0] ;
+33003424 -> 33003776 [weight=1, style=solid] ;
+33003776 -> 33004320 [weight=1, style=solid] ;
+33004320 -> 33002864 [weight=0] ;
+33004320 -> 33002544 [weight=1, style=solid] ;
+}

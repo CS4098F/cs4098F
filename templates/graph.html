@@ -35,13 +35,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
     <style type="text/css" media="screen">
-    #editor { 
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;	
-        left: 0;
-    }
+   
     </style>
 </head>
 <body>
@@ -110,18 +104,13 @@
 		
 		
             	
+                    <form action="/graph" method="POST">
                     <div class="about-div2  ">
-                        <div  id="editor">{{output}}</div>
-			
-
+                        <textarea name="text" id="content" rows="15" cols="85"  required="required">{{output}}</textarea>
+            <center> <input type="submit" value="Create Graph"></button></center>
+			</form></div>
 	
 			
-		
-
-			
-    
-
-</div>
 
 
 
@@ -136,11 +125,6 @@
 <p></p>
 <textarea name="error" id="error" class="form-control" rows="1" disabled="disabled" placeholder="Error Messages will be reported here">{{result}}</textarea>
 <center><embed src= {{imgpath}} width="700" height="600" type='application/svg'><center>
-<form action="/graph" method="POST">
-                    <textarea class="col-md-6" name="text" id="content" rows="5" cols="70" style="display:none" required="required"></textarea>
-             <input type="submit" value="Create Graph"></button>
-			</form>
-
             
                     
                 </div>
@@ -151,58 +135,7 @@
 
         </div>
 
-<script>
-	
 
-   
-   
-   
-
-   
-
-   
-</script>
-
-<script>
-	
-	$(function()
-	{
-	        require(['static/ace-master/lib/ace/ace', 'static/ace-master/lib/ace/ext/language_tools'], function(ace)
-		{
-			var textarea = $('#content');
-	       	  	editor = ace.edit("editor");
-	       	 	editor.setTheme("static/ace-master/lib/ace/theme/monokai");
-	       		editor.getSession().setMode("static/ace-master/lib/ace/mode/pml");
-			editor.getSession().on('change', function () {
-      				 textarea.val(editor.getSession().getValue());
-			});
-			editor.setReadOnly(true)
-			textarea.val(editor.getSession().getValue());
-	 		editor.setOptions(
-			{
-        			enableBasicAutocompletion: true,
-        			enableLiveAutocompletion: true
-        	  	});
-        	  	editor.resize();
-			var button;
-          		button = document.getElementById('btnSave');
-          		button.addEventListener('click', function (e) {
-          		var outputXmlStr, blob;
-          		outputXmlStr = editor.getSession().getValue();
-          		// If the string is null or empty, do nothing.
-          		if (!outputXmlStr)
-                		return;
-                	blob = new Blob([outputXmlStr], { type: 'text/plain' });
-               		// Use the FileSaver.js interface to download the file.
-               		saveAs(blob, 'tempfile.pml');
-            		});
-     		});
-     		$(window).resize(resizeAce);
-		
-           		
-     		resizeAce();
-    	});
-</script>
 
     </section>
 

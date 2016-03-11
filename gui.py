@@ -55,7 +55,7 @@ def upload_file():
             file_handle.write(out_data)
             file_handle.close()
 
-            return render_template("index1.html", output = out_data)
+            return render_template("index1.html", output = out_data, filename = filename)
         else:
             return redirect("/")
 

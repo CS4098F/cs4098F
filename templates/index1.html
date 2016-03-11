@@ -97,19 +97,18 @@
 
 		
 		
-            	
+            	<form action="/pmlcheck" method="POST">
                     <div class="about-div2  ">
-                        <div  id="editor">{{output}}</div>
+                        <textarea name="text" id="content" rows="15" cols="85"  required="required">{{output}}</textarea>
+            <center> <input type="submit" value="Submit Error Check"></button></center>
+			</form></div>
 			
 
 	
 		
 
 			
-    
-
-</div>
-
+   
 
 
 </div>
@@ -123,10 +122,8 @@
 <p></p>
 <textarea name="error" id="error" class="form-control" rows="1" disabled="disabled" placeholder="Error Messages will be reported here">{{result}}</textarea>
 <p></p>
-<form action="/pmlcheck" method="POST">
-                    <textarea class="col-md-6" name="text" id="content" rows="5" cols="70" style="display:none" required="required"></textarea>
-             <input type="submit" value="Submit Error Check"></button>
-			</form>
+
+                   
             
                     
                 </div>
@@ -137,46 +134,7 @@
 
         </div>
 
-<script>
-	
 
-   
-   
-   
-
-   
-
-   
-</script>
-
-<script>
-	
-	$(function()
-	{
-	        require(['static/ace-master/lib/ace/ace', 'static/ace-master/lib/ace/ext/language_tools'], function(ace)
-
-		{
-			var textarea = $('#content');
-	       	  	editor = ace.edit("editor");
-	       	 	editor.setTheme("static/ace-master/lib/ace/theme/monokai");
-	       		editor.getSession().setMode("static/ace-master/lib/ace/mode/pml");
-			editor.getSession().on('change', function () {
-      				 textarea.val(editor.getSession().getValue());
-			});
-			textarea.val(editor.getSession().getValue());
-	 		editor.setOptions(
-			{
-        			enableBasicAutocompletion: true,
-        			enableLiveAutocompletion: true
-        	  	});
-        	  	editor.resize();
-     		});
-     		$(window).resize(resizeAce);
-		
-           		
-     		resizeAce();
-    	});
-</script>
 
     </section>
 
