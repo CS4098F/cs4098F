@@ -26,6 +26,7 @@ def __init__():
 
 @app.route('/')
 def main():
+    __init__()
     return render_template('index1.html')
 
 
