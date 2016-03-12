@@ -136,8 +136,9 @@ def graph():
                 analysis_file.write(output_res)
                 analysis_file.close()
 
+                error = error.strip().replace(name + ':', "Line number ")
                 if process.returncode > 0:
-                    return render_template('graph.html', result=err, output=text)
+                    return render_template('index1.html', result=error, output=text)
                 finalgraph = test.graph_analysis(pmlfile=name, flag='-n')
                 
                 # create graph
@@ -153,6 +154,7 @@ def graph():
 
             except subprocess.CalledProcessError as err:
                 return err.output.decode(), 400
+
 
 
 
