@@ -112,7 +112,7 @@ def flushPath(filename):
 @app.route("/resource", methods=['GET','POST'])
 def graphResourceFlow():
     #if request.method == 'POST':
-        text = request.form["input"]
+        text = request.form["text"]
 
         if text:
             with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml') as file:#open(path) as file:
