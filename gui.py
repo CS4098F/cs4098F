@@ -1,7 +1,6 @@
 import json
 import os, sys, tempfile, stat, shutil
 import subprocess
-import uuid
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug import secure_filename
 import pygraphviz as pgv
@@ -27,7 +26,7 @@ def __init__():
 @app.route('/')
 def main():
     __init__()
-    return render_template('index1.html')
+    return render_template('graph.html')
 
 
 # For a given file, return whether it's an allowed type or not
@@ -58,51 +57,51 @@ def upload_file():
             file_handle.write(out_data)
             file_handle.close()
 
-            return render_template("index1.html", output=out_data)
+            return render_template("graph.html", output=out_data)
         else:
             return redirect("/")
 
 
-@app.route("/pmlcheck", methods=['POST'])
-def pmlcheck():
-    #global text
-    text = request.form["text"]
+# @app.route("/pmlcheck", methods=['POST'])
+# def pmlcheck():
+#     #global text
+#     text = request.form["text"]
 
-    if text:
+#     if text:
 
-        #global filename
+#         #global filename
 
-        filename = 'test.pml'  # + random.choice("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ") + '.pml'
+#         filename = 'test.pml'  # + random.choice("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ") + '.pml'
 
-        # save pml file
-        file_handle = open(BUCKET_PATH + filename, "w")
-        file_handle.write(text)
-        file_handle.close()
+#         # save pml file
+#         file_handle = open(BUCKET_PATH + filename, "w")
+#         file_handle.write(text)
+#         file_handle.close()
 
-        #global path
-        path = os.path.join(BUCKET_PATH, filename)
+#         #global path
+#         path = os.path.join(BUCKET_PATH, filename)
 
-        file = open(path, 'r')
+#         file = open(path, 'r')
 
-        process = subprocess.Popen(["peos/pml/check/pmlcheck", file.name], stdin=subprocess.PIPE,
-                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        #global output_res
-        output_res, err = process.communicate()
-        output_res = output_res.strip().replace(path, filename)
+#         process = subprocess.Popen(["peos/pml/check/pmlcheck", file.name], stdin=subprocess.PIPE,
+#                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+#         #global output_res
+#         output_res, err = process.communicate()
+#         output_res = output_res.strip().replace(path, filename)
 
-        output_res = "No errors detected"
+#         output_res = "No errors detected"
 
-        err = err.strip().replace(path + ':', "Line number ")
-        if process.returncode > 0:
-            return render_template('index1.html', result=err, output=text)
-        return render_template('graph.html', result=output_res, output=text)
+#         err = err.strip().replace(path + ':', "Line number ")
+#         if process.returncode > 0:
+#             return render_template('index1.html', result=err, output=text)
+#         return render_template('graph.html', result=output_res, output=text)
 
 
-def flushPath():
+def flushPath(filename):
     #removes files in temp_folder
     folder = BUCKET_PATH
-    for the_file in os.listdir(folder):
-        file_path = os.path.join(folder, the_file)
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
         try:
             if os.path.isfile(file_path):
                 os.unlink(file_path)
@@ -113,6 +112,7 @@ def flushPath():
 @app.route("/graph", methods=['GET', 'POST'])
 def graph():
     text = request.form["text"]
+
     if text:
         with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml') as file:#open(path) as file:
             name = file.name
@@ -138,11 +138,12 @@ def graph():
 
                 error = error.strip().replace(name + ':', "Line number ")
                 if process.returncode > 0:
-                    return render_template('index1.html', result=error, output=text)
+                    return render_template('graph.html', result=error, output=text)
                 finalgraph = test.graph_analysis(pmlfile=name, flag='-n')
                 
                 # create graph
                 Graph = pgv.AGraph(finalgraph)
+
                 Graph.draw(BUCKET_PATH +'graph'+'.svg', prog="dot")
 
                 #return graph
