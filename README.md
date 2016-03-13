@@ -43,19 +43,18 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 ## Features Implemented:
 
 File Upload
+- User selects a file from local storage which is then copied as a temporary file for later use. 
+- Content of the uploaded file is loaded into the textarea.
 
 Syntax Analysis
+- Upon attempting to create a graph from the selection, the text value from the Text Area is submitted to pmlcheck for error testing.
+- The result is parsed and, in the case of an error, the user is returned to the current screen and notified of the error. 
 
 Resource Flow
-
-
-## Features in Testing:
+- A temporary file is created from the value within the text area and is then passed through traverse, resulting in dot file creation.
+- The dot file with annoted resources is then converted and displayed as a PDF to allow the user to zoom or move around the resultant graph. 
 
 Analysis Colored Actions
+- A temporart file is created from the value within the text area and is then passed through pmlcheck to generate an analysis file which is then used n conjunction with the pml file, generated dot file, and awk file to designate the colors. 
+- The resulting PDF file is then displayed to allow the user to zoom or move around the graph. 
 
-
-## Features in Production:
-
-Social Network
-
-Agent Colored Actions 
