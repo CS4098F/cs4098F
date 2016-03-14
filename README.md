@@ -24,9 +24,7 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 ```sudo pip install werkzeug```
 
-```sudo pip install pdfkit```
-
-```sudo apt-get install wkhtmltopdf```
+```sudo pip install cairosvg```
 
 ```sudo pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/" ```
 
@@ -59,6 +57,6 @@ Resource Flow
 - The dot file with annoted resources is then converted and displayed as a PDF to allow the user to zoom or move around the resultant graph. 
 
 Analysis Colored Actions
-- A temporart file is created from the value within the text area and is then passed through pmlcheck to generate an analysis file which is then used n conjunction with the pml file, generated dot file, and awk file to designate the colors. 
+- A temporary file is created from the value within the text area and is then passed through pmlcheck to generate an analysis file which is then used in conjunction with the pml file, generated dot file, and awk file to designate the colors. 
 - The resulting PDF file is then displayed to allow the user to zoom or move around the graph. 
 

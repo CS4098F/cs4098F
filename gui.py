@@ -1,11 +1,11 @@
 import json
-import os, sys, tempfile, stat, shutil, requests, base64
+import os, sys, tempfile, stat, shutil
 import subprocess
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug import secure_filename
 import pygraphviz as pgv
 import test
-import pdfkit
+import cairosvg
 
 
 reload(sys)
@@ -79,6 +79,7 @@ def flushPath(filename):
             print e
 
 #analysis colored actions
+#@app.route('/')
 @app.route("/graph", methods=['GET','POST'])
 def graphAnalysisColored():
     #if request.method == 'POST':
@@ -118,11 +119,13 @@ def graphAnalysisColored():
                     Graph = pgv.AGraph(finalgraph)
                     Graph.draw(BUCKET_PATH +'graph.svg', prog="dot")
 
-                    #return graph
-                    #listFiles = url_for('uploaded_file' , filename= 'graph.svg')
-                    
-                    with open(BUCKET_PATH + 'graph.svg') as f:
-                        pdfkit.from_file(f, BUCKET_PATH + 'graph.pdf')
+
+
+
+
+
+
+                    cairosvg.svg2pdf(url= BUCKET_PATH + 'graph.svg', write_to=BUCKET_PATH + 'graph.pdf')
 
                     output_res = 'No Errors Detected'
 
@@ -167,8 +170,9 @@ def graphResourceFlow():
                     Graph2 = pgv.AGraph(resourceflow)
                     Graph2.draw(BUCKET_PATH +'graph2.svg', prog="dot")
 
-                    with open(BUCKET_PATH + 'graph2.svg') as f:
-                        pdfkit.from_file(f, BUCKET_PATH + 'graph2.pdf')
+                    #with open(BUCKET_PATH + 'graph2.svg') as f:
+                        #pdfkit.from_file(f, BUCKET_PATH + 'graph2.pdf')
+                    cairosvg.svg2pdf(url= BUCKET_PATH + 'graph2.svg', write_to=BUCKET_PATH + 'graph2.pdf')
 
                     output_res = 'No Errors Detected'
 
