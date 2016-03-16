@@ -16,7 +16,7 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 
 ## 2:Install library dependencies for the app :
-```sudo apt-get install graphviz git python-pip libgraphviz-dev pkg-config python-dev python3-tk```
+```sudo apt-get install graphviz git python-pip libgraphviz-dev pkg-config python-dev python3-tk libffi-dev```
 
 ```sudo pip install flask```
 
