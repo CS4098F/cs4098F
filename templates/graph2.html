@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>PML GUI</title>
+    <meta charset="utf-8" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="static/jquery-linedtextarea.js"></script>
+    <!-- <link href="static/jquery-linedtextarea.css" type="text/css" rel="stylesheet" /> -->
+    <link rel="stylesheet" type="text/css" href="/static/layout.css">
+</head>
+<body id="index" class="home">
+<div id="links">
+<ul>
+<li><a href="/">Home</a></li>
+</ul>
+</div>
+<div id="content">
+    <!-- ************  CODING ZONE  ************ -->
+    <div id="code">
+        <form method="post" action="/graph">
+            <div id="title-code" class="head-section">
+
+            </div>
+            <!-- <textarea class="lined" id="text-code" name="code" rows="10" cols="60"> -->
+            <textarea name="code" class ="lined"  rows="18" cols="85"  required="required">{{output}}</textarea>
+            <center> <input type="submit" value="Create Analysis Colored Graph"></button></center>
+            
+            <!-- <div id="text-code-ace" class="hidden">{{ output }}</div> -->
+        </form>
+    </div>
+
+    <!-- File Upload Section-->
+
+    <center>
+    <div id="title-code" class="head-section">
+            <form action="/upload" method="POST" enctype=multipart/form-data>
+            <input type=file name=file>
+            <input type=submit value=Upload>
+            </form>
+    </center>
+    
+    <!-- ************ Graph************ -->
+    
+    <div id="result">
+        <div id="title-result" class="head-section">
+            Graph Output
+        </div>
+        <embed id = "svg-file" src= {{imgpath}} width="90%" height="90%" type='image/svg+xml'>
+    </div>
+    
+    <!-- ************ COMPILATION RESULTS ZONE ************ -->
+    
+    <div id="compile">
+        <div id="title-compile" class="head-section">
+            Compilation / Output
+        </div>
+        <textarea id="text-compile" rows="5" cols="4" readonly>{{ result }}</textarea>
+    </div>
+</div>
+
+
+<!-- <script src="{{ url_for('static', filename='ace/ace.js') }}"></script>
+<script>
+    // The Ace editor needs divs instead of textareas
+    // So we hide the textarea and show a div instead
+    var editorElement = document.getElementById("text-code");
+    editorElement.classList.add("hidden");
+    document.getElementById("text-code-ace").classList.remove("hidden");
+
+    // Set up the editor
+    var editor = ace.edit("text-code-ace");
+    editor.setTheme("ace/theme/tomorrow");
+    var language = "pml";
+    editor.getSession().setMode("ace/mode/" + language);
+
+    // Make sure we copy the content of the editor to the textarea before posting
+    // its content to the server
+    document.getElementById("launch-button").addEventListener("click", function () {
+        editorElement.innerHTML = editor.getValue();
+    });
+</script> -->
+<script>
+$(function() {
+    $(".lined").linedtextarea(
+        {selectedLine: 1}
+    );
+});
+</script>
+
+<script src="{{ url_for('static', filename='svg-pan-zoom.min.js') }}"></script>
+    <script>
+      // Don't use window.onLoad like this in production, because it can only listen to one function.
+      window.onload = function() {
+        svgPanZoom('#svg-file', {
+          zoomEnabled: true,
+          controlIconsEnabled: true
+        });
+      };
+    </script>
+</body>
+</html>
