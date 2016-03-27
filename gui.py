@@ -4,8 +4,8 @@ import subprocess
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug import secure_filename
 import pygraphviz as pgv
-import test
-import cairosvg
+import graph as test
+
 
 
 reload(sys)
@@ -29,7 +29,7 @@ def __init__():
 def main():
     __init__()
 
-    return render_template('graph.html')
+    return render_template('graph2.html')
 
 
 # For a given file, return whether it's an allowed type or not
@@ -60,10 +60,9 @@ def upload_file():
             file_handle.write(out_data)
             file_handle.close()
 
-            return render_template("graph.html", output=out_data)
+            return render_template("graph2.html", output=out_data)
         else:
             return redirect("/")
-
 
 
 
@@ -79,11 +78,11 @@ def flushPath(filename):
             print e
 
 #analysis colored actions
-#@app.route('/')
+
 @app.route("/graph", methods=['GET','POST'])
 def graphAnalysisColored():
     #if request.method == 'POST':
-        text = request.form["text"]
+        text = request.form["code"]
 
         if text:
             with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml', delete=False ) as file:#open(path) as file:
@@ -110,80 +109,37 @@ def graphAnalysisColored():
 
                     error = error.strip().replace(name + ':', "Line number ")
                     if process.returncode > 0:
-                        return render_template('graph.html', result=error, output=text)
+                        return render_template('graph2.html', result=error, output=text)
                     finalgraph = test.graph_analysis(pmlfile=name, flag='-n')
 
                     # create graph
                     #flushPath('graph.svg')
 
                     Graph = pgv.AGraph(finalgraph)
+                    Graph.graph_attr['label']='Simple'  #label=\"%s\"];\n", filename
                     Graph.draw(BUCKET_PATH +'graph.svg', prog="dot")
 
 
+                    output_res = output_res.strip().replace(name + ':', "Line number ")#'No Errors Detected'
 
+                    listFiles = url_for('uploaded_file' , filename= 'graph.svg')
 
-
-
-
-                    cairosvg.svg2pdf(url= BUCKET_PATH + 'graph.svg', write_to=BUCKET_PATH + 'graph.pdf')
-
-                    output_res = 'No Errors Detected'
-
-                    listFiles = url_for('uploaded_file' , filename= 'graph.pdf')
-
-                    return render_template('graph.html', result=output_res, output=text, imgpath=listFiles)
+                    return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles)
 
                 except subprocess.CalledProcessError as err:
-                    return err.output.decode()#, 400
-
-#analysis colored actions
-@app.route("/resource", methods=['GET','POST'])
-def graphResourceFlow():
-    #if request.method == 'POST':
-        text = request.form["input"]
-
-        if text:
-            with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml') as file:#open(path) as file:
-                name = file.name
-                basename, ext = os.path.splitext(name)
-                path = os.path.join(basename + '.pml')
-
-                file.write(text)
-                file.flush()
-                try:
-
-                    #check for error to avoid dot error later on
-                    process = subprocess.Popen(["peos/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
-                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    output_res, error = process.communicate()
-                    output_res = output_res.strip().replace(path, name)
+                    return err.output.decode(), 400
+        else:
+        	return redirect('/')
 
 
-                    error = error.strip().replace(name + ':', "Line number ")
-                    if process.returncode > 0:
-                        return render_template('graph.html', result=error, output=text)
-                    resourceflow = test.traverse(pmlfile=name, flag='-n')
+@app.route("/sldiagram")
+def swimLaneDiagram():
+	text = request.form["code"]
+	if text :
+		return render_template("swimlane.html")
 
-                    # create graph
-                    #flushPath('graph.svg')
-
-                    Graph2 = pgv.AGraph(resourceflow)
-                    Graph2.draw(BUCKET_PATH +'graph2.svg', prog="dot")
-
-                    #with open(BUCKET_PATH + 'graph2.svg') as f:
-                        #pdfkit.from_file(f, BUCKET_PATH + 'graph2.pdf')
-                    cairosvg.svg2pdf(url= BUCKET_PATH + 'graph2.svg', write_to=BUCKET_PATH + 'graph2.pdf')
-
-                    output_res = 'No Errors Detected'
-
-                    #return graph
-                    listFiles = url_for('uploaded_file' , filename= 'graph2.pdf')
-
-                    return render_template('graph.html', result=output_res, output=text, imgpath=listFiles)
-
-                except subprocess.CalledProcessError as err:
-                    return err.output.decode()#, 400
-
+	else:
+		return redirect('/')
 
 
 if __name__ == "__main__":
