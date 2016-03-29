@@ -1,6 +1,6 @@
 process simple{
 	action aa{
-    	agent{ myself && i}
+    	agent{ myself}
         agent{ yourself}
     }
     action bb{

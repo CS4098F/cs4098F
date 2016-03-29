@@ -24,7 +24,7 @@ li {
 
 #code {
     position: absolute;
-    height: 60%;
+    height: 70%;
     min-height: 350px;
     min-width: 400px;
     left: 10px;
@@ -35,11 +35,12 @@ li {
 #result {
     position: absolute;
     height: 90%;
-    min-height: 600px;
-    min-width: 500px;
-    right: 0px;
-    top: 5px;
-    width: 48%;
+    min-height: 700px;
+    min-width: 600px;
+    left: 50%;
+    top: 19px;
+    width: 50%;
+    bottom: 35px;
 }
 
 #compile {
@@ -49,8 +50,8 @@ li {
     min-height: 100px;
     min-width: 400px;
     width: 48%;
-    height: 30%;
-    bottom: 0px;
+    height: 20%;
+    bottom: 35px;
 }
 
 /*#launch-button {
@@ -71,7 +72,9 @@ li {
 
 #title-result {
     position: absolute;
-    left: 5px;
+    left: 40%;
+    top : -20px;
+    
 }
 
 #title-compile{
@@ -155,4 +158,10 @@ li {
 
 .linedwrap .codelines .lineselect {
     color: red;
+}
+
+#footer {
+    position: absolute;
+    bottom: -80px;
+
 }

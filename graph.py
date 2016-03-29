@@ -67,7 +67,7 @@ def graph_analysis(pmlfile, flag):
 
     args = ['sed', '-i', '-e',AWK_FILE, COLOR_DOT_FILE]
     process = subprocess.Popen(args, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.PIPE )
-    
+    process.wait()
     output_color_dot, error = process.communicate()
 
     final_colored_dot = open(COLOR_DOT_FILE, 'r')

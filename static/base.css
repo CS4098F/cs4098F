@@ -1,0 +1,24 @@
+#options-div {
+	float:left;
+}
+#container {
+	max-height:100%
+}
+
+#graph-div {
+	min-height:200px;
+	max-height:100%;
+	overflow:scroll;
+	border:1px solid black ;
+}
+
+#about {
+	border-top:1px solid black ;
+	clear:both;
+}
+
+#chl {
+    min-height:100px;
+    width:90%;
+
+}
