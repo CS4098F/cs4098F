@@ -51,13 +51,13 @@ li {
     min-width: 400px;
     width: 48%;
     height: 20%;
-    bottom: 35px;
+    bottom: 0px;
 }
 
-/*#launch-button {
+#submit-button {
     position: absolute;
     right: 0px;
-}*/
+}
 
 .head-section {
     position: absolute;

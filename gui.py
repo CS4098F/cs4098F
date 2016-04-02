@@ -1,12 +1,10 @@
 import json
-import os, sys, tempfile, stat, shutil, re, nltk
+import os, sys, tempfile#, nltk
 import subprocess
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug import secure_filename
 import pygraphviz as pgv
 import graph as test
-import pmltoxmlparser as test2
-from xml.etree import ElementTree as ET
 
 
 reload(sys)
@@ -30,7 +28,7 @@ def __init__():
 def main():
     __init__()
 
-    return render_template('graph2.html')
+    return render_template('graph.html')
 
 
 # For a given file, return whether it's an allowed type or not
@@ -51,7 +49,7 @@ def upload_file():
         files = request.files['file']
         if files and allowed_file(files.filename):
             out_data = files.read()
-            global filename
+            # global filename
             filename = secure_filename(files.filename)
             # global path
             path = os.path.join(BUCKET_PATH, filename)
@@ -61,9 +59,10 @@ def upload_file():
             file_handle.write(out_data)
             file_handle.close()
 
-            return render_template("graph2.html", output=out_data)
+            return render_template("graph.html", output=out_data)
         else:
             return redirect("/")
+
 
 
 
@@ -77,26 +76,194 @@ def flushPath(filename):
                 os.unlink(file_path)
         except Exception, e:
             print e
+@app.route('/')
+@app.route("/pmlcheck", methods=['GET','POST'])
+def pmlCheck():
+    #if request.method == 'POST':
+        text = request.form["text"]
+
+        if text:
+            with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml', delete=False ) as file:#open(path) as file:
+                name = file.name
+                basename, ext = os.path.splitext(name)
+                path = os.path.join(basename + '.pml')
+
+                file.write(text)
+                file.flush()
+                try:
+
+                    #check for error to avoid dot error later on
+                    process = subprocess.Popen(["peos/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    output_res, error = process.communicate()
+                    output_res = output_res.strip().replace(path, name)
+
+                    # create analysis file
+                    fname, ext = os.path.splitext(name)
+                    path2 = os.path.join(fname + ".analysis")
+                    analysis_file = open(path2, "w")
+                    analysis_file.write(output_res)
+                    analysis_file.close()
+
+                    error = error.strip().replace(name + ':', "Line number ")
+                    if process.returncode > 0:
+                        return render_template('graph.html', result=error, output=text)
 
 
-@app.route("/graph" , methods=['GET','POST'])
-def swimLaneDiagram():
-    text = request.form["code"]
-    if text :
-        path = os.path.join(BUCKET_PATH, 'test.pml')
-        file_handle = open(path, "w")
-        # write data to file
-        file_handle.write(text)
-        file_handle.close()
+                    output_res = output_res.strip().replace(name + ':', "Line number ")#'No Errors Detected'
 
-        test2.translate_pml_file('temp_folder/test.pml')
-        agents =  test2.getAgents('temp_folder/test.xml')
-        names = test2.getNames(agents)
-        #print (names)
+                    return render_template('graph2.html', result=output_res, output=text)
 
-        return render_template("graph.html", agent=names)#, agent2=ag2, agent3=ag3, agent4=ag4, agent5=ag5, agent6=ag6)
-    else:
-        return redirect('/')
+                except subprocess.CalledProcessError as err:
+                    return err.output.decode()#, 400
+
+#analysis colored actions
+#@app.route('/')
+@app.route("/graph", methods=['GET','POST'])
+def graphAnalysisColored():
+    #if request.method == 'POST':
+        text = request.form["text"]
+
+        if text:
+            with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml', delete=False ) as file:#open(path) as file:
+                name = file.name
+                basename, ext = os.path.splitext(name)
+                path = os.path.join(basename + '.pml')
+
+                file.write(text)
+                file.flush()
+                try:
+
+                    #check for error to avoid dot error later on
+                    process = subprocess.Popen(["peos/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    output_res, error = process.communicate()
+                    output_res = output_res.strip().replace(path, name)
+
+                    # create analysis file
+                    fname, ext = os.path.splitext(name)
+                    path2 = os.path.join(fname + ".analysis")
+                    analysis_file = open(path2, "w")
+                    analysis_file.write(output_res)
+                    analysis_file.close()
+
+                    error = error.strip().replace(name + ':', "Line number ")
+                    if process.returncode > 0:
+                        return render_template('graph.html', result=error, output=text)
+                    finalgraph = test.graph_analysis(pmlfile=name, flag='-n')
+
+                    # create graph
+                    #flushPath('graph.svg')
+
+                    Graph = pgv.AGraph(finalgraph)
+                    Graph.draw(BUCKET_PATH +'graph.svg', prog="dot")
+
+
+                    output_res = output_res.strip().replace(name + ':', "Line number ")#'No Errors Detected'
+
+                    listFiles = url_for('uploaded_file' , filename= 'graph.svg')
+
+                    return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles)
+
+                except subprocess.CalledProcessError as err:
+                    return err.output.decode()#, 400
+
+#resource flow
+@app.route("/resource", methods=['GET','POST'])
+def graphResourceFlow():
+    #if request.method == 'POST':
+        text = request.form["input"]
+
+        if text:
+            with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml') as file:#open(path) as file:
+                name = file.name
+                basename, ext = os.path.splitext(name)
+                path = os.path.join(basename + '.pml')
+
+                file.write(text)
+                file.flush()
+                try:
+
+                    #check for error to avoid dot error later on
+                    process = subprocess.Popen(["peos/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    output_res, error = process.communicate()
+                    output_res = output_res.strip().replace(path, name)
+
+
+                    error = error.strip().replace(name + ':', "Line number ")
+                    if process.returncode > 0:
+                        return render_template('graph.html', result=error, output=text)
+                    resourceflow = test.traverse(pmlfile=name, flag='-n')
+
+                    # create graph
+                    #flushPath('graph.svg')
+
+                    Graph2 = pgv.AGraph(resourceflow)
+                    Graph2.draw(BUCKET_PATH +'graph2.svg', prog="dot")
+
+        
+                    output_res = output_res.strip().replace(name + ':', "Line number ")#'No Errors Detected'
+
+                    #return graph
+                    listFiles = url_for('uploaded_file' , filename= 'graph2.svg')
+
+                    return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles)
+
+                except subprocess.CalledProcessError as err:
+                    return err.output.decode()#, 400
+
+@app.route("/agents", methods=['GET','POST'])
+def graphAgentColored():
+    #if request.method == 'POST':
+        text = request.form["input2"]
+
+        if text:
+            with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml') as file:#open(path) as file:
+                name = file.name
+                basename, ext = os.path.splitext(name)
+                path = os.path.join(basename + '.pml')
+
+                file.write(text)
+                file.flush()
+                try:
+
+                    #check for error to avoid dot error later on
+                    process = subprocess.Popen(["peos/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    output_res, error = process.communicate()
+                    output_res = output_res.strip().replace(path, name)
+
+                    # create analysis file
+                    fname, ext = os.path.splitext(name)
+                    path2 = os.path.join(fname + ".analysis")
+                    analysis_file = open(path2, "w")
+                    analysis_file.write(output_res)
+                    analysis_file.close()
+
+
+                    error = error.strip().replace(name + ':', "Line number ")
+                    if process.returncode > 0:
+                        return render_template('graph.html', result=error, output=text)
+                    resourceflow = test.graph_analysis(pmlfile=name, flag='-f')
+
+                    # create graph
+                    #flushPath('graph.svg')
+
+                    Graph2 = pgv.AGraph(resourceflow)
+                    Graph2.draw(BUCKET_PATH +'graph3.svg', prog="dot")
+
+        
+                    output_res = 'No Errors Detected'
+
+                    #return graph
+                    listFiles = url_for('uploaded_file' , filename= 'graph3.svg')
+
+                    return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles)
+
+                except subprocess.CalledProcessError as err:
+                    return err.output.decode()#, 400
+
 
 
 if __name__ == "__main__":
