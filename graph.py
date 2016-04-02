@@ -22,7 +22,7 @@ def traverse(pmlfile, flag):
     basename, ext = os.path.splitext(pmlfile)
     path = os.path.join(BUCKET_PATH, basename + '.dot')
 
-    args = ["peos/pml/graph/traverse", flag, pmlfile]
+    args = ["peosModified/pml/graph/traverse", flag, pmlfile]
     process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     dotOutput, error = process.communicate()
 
@@ -39,7 +39,7 @@ def traverse(pmlfile, flag):
 #awk to create sed color file
 def awk(analysis_file):
 
-    args = ["awk", '-f', "peos/pml/graph/color-pml.awk"]
+    args = ["awk", '-f', "peosModified/pml/graph/color-pml.awk"]
     process = subprocess.Popen(args, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     awkOutput, error = process.communicate(input=analysis_file)

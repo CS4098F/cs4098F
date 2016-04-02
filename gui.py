@@ -93,7 +93,7 @@ def pmlCheck():
                 try:
 
                     #check for error to avoid dot error later on
-                    process = subprocess.Popen(["peos/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
+                    process = subprocess.Popen(["peosModified/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     output_res, error = process.communicate()
                     output_res = output_res.strip().replace(path, name)
@@ -135,7 +135,7 @@ def graphAnalysisColored():
                 try:
 
                     #check for error to avoid dot error later on
-                    process = subprocess.Popen(["peos/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
+                    process = subprocess.Popen(["peosModified/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     output_res, error = process.communicate()
                     output_res = output_res.strip().replace(path, name)
@@ -185,7 +185,7 @@ def graphResourceFlow():
                 try:
 
                     #check for error to avoid dot error later on
-                    process = subprocess.Popen(["peos/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
+                    process = subprocess.Popen(["peosModified/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     output_res, error = process.communicate()
                     output_res = output_res.strip().replace(path, name)
@@ -229,7 +229,7 @@ def graphAgentColored():
                 try:
 
                     #check for error to avoid dot error later on
-                    process = subprocess.Popen(["peos/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
+                    process = subprocess.Popen(["peosModified/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     output_res, error = process.communicate()
                     output_res = output_res.strip().replace(path, name)
