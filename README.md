@@ -33,7 +33,7 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 2- ```cd``` into cs4098F folder. Run ```git submodule update --init --recursive```
 
-3- ```cd peosModified/peos``` and execute  ```make```  on terminal where the Makefile is
+3- ```cd peosModified/pml``` and execute  ```make```  on terminal where the Makefile is
 
 4- go back just one level```cd ..```and run ```python gui.py``` 
 
