@@ -39,12 +39,5 @@ $4 == "provides" && $5 == "but" && $6 == "does" && $7 == "not" && $8 == "require
 
 END {
     printf("/shape=plaintext/ {\n");
-    printf("a\\\nlegend1 [shape=box, style=filled, label=\"grey fill - black hole\"];\n");
-    printf("a\\\nlegend2 [shape=box, style=filled, color=cornflowerblue, label=\"blue fill - miracle\"];\n");
-    printf("a\\\nlegend3 [shape=box, style=dotted, label=\"dotted outline - empty\"];\n");
-    printf("a\\\nlegend4 [shape=plaintext, fontcolor=blue, label=\"blue text - transform\"];\n");
-    printf("a\\\nlegend5 [shape=plaintext, fontcolor=red, label=\"red text - output?\"];\n");
-    printf("a\\\nlegend6 [shape=plaintext, fontcolor=green, label=\"green text - input?\"];\n");
-    printf("a\\\nprocess -> legend1 -> legend2 -> legend3 -> legend4 -> legend5 -> legend6 [style=invis];\n");
     printf("}\n");
 }

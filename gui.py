@@ -76,6 +76,8 @@ def flushPath(filename):
                 os.unlink(file_path)
         except Exception, e:
             print e
+
+
 @app.route('/')
 @app.route("/pmlcheck", methods=['GET','POST'])
 def pmlCheck():
@@ -91,31 +93,20 @@ def pmlCheck():
                 file.write(text)
                 file.flush()
                 try:
-
                     #check for error to avoid dot error later on
-                    process = subprocess.Popen(["peosModified/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
-                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    output_res, error = process.communicate()
-                    output_res = output_res.strip().replace(path, name)
+                    output_res, error = test.pmlCheckT(name)
 
-                    # create analysis file
-                    fname, ext = os.path.splitext(name)
-                    path2 = os.path.join(fname + ".analysis")
-                    analysis_file = open(path2, "w")
-                    analysis_file.write(output_res)
-                    analysis_file.close()
-
-                    error = error.strip().replace(name + ':', "Line number ")
-                    if process.returncode > 0:
+                    if error:
+                        error = error.strip().replace(name + ':', "Line number ")
                         return render_template('graph.html', result=error, output=text)
-
 
                     output_res = output_res.strip().replace(name + ':', "Line number ")#'No Errors Detected'
 
                     return render_template('graph2.html', result=output_res, output=text)
 
                 except subprocess.CalledProcessError as err:
-                    return err.output.decode()#, 400
+                    return err.output.decode(), 400
+
 
 #analysis colored actions
 #@app.route('/')
@@ -135,25 +126,14 @@ def graphAnalysisColored():
                 try:
 
                     #check for error to avoid dot error later on
-                    process = subprocess.Popen(["peosModified/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
-                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    output_res, error = process.communicate()
-                    output_res = output_res.strip().replace(path, name)
+                    output_res, error = test.pmlCheckT(name)
 
-                    # create analysis file
-                    fname, ext = os.path.splitext(name)
-                    path2 = os.path.join(fname + ".analysis")
-                    analysis_file = open(path2, "w")
-                    analysis_file.write(output_res)
-                    analysis_file.close()
-
-                    error = error.strip().replace(name + ':', "Line number ")
-                    if process.returncode > 0:
+                    if error:
+                        error = error.strip().replace(name + ':', "Line number ")
                         return render_template('graph.html', result=error, output=text)
+
                     finalgraph = test.graph_analysis(pmlfile=name, flag='-n')
 
-                    # create graph
-                    #flushPath('graph.svg')
 
                     Graph = pgv.AGraph(finalgraph)
                     Graph.draw(BUCKET_PATH +'graph.svg', prog="dot")
@@ -166,7 +146,7 @@ def graphAnalysisColored():
                     return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles)
 
                 except subprocess.CalledProcessError as err:
-                    return err.output.decode()#, 400
+                    return err.output.decode(), 400
 
 #resource flow
 @app.route("/resource", methods=['GET','POST'])
@@ -185,23 +165,16 @@ def graphResourceFlow():
                 try:
 
                     #check for error to avoid dot error later on
-                    process = subprocess.Popen(["peosModified/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
-                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    output_res, error = process.communicate()
-                    output_res = output_res.strip().replace(path, name)
-
+                    output_res, error = test.pmlCheckT(name)
 
                     error = error.strip().replace(name + ':', "Line number ")
-                    if process.returncode > 0:
+                    if error:
                         return render_template('graph.html', result=error, output=text)
+                    
                     resourceflow = test.traverse(pmlfile=name, flag='-n')
-
-                    # create graph
-                    #flushPath('graph.svg')
 
                     Graph2 = pgv.AGraph(resourceflow)
                     Graph2.draw(BUCKET_PATH +'graph2.svg', prog="dot")
-
         
                     output_res = output_res.strip().replace(name + ':', "Line number ")#'No Errors Detected'
 
@@ -212,6 +185,7 @@ def graphResourceFlow():
 
                 except subprocess.CalledProcessError as err:
                     return err.output.decode()#, 400
+
 
 @app.route("/agents", methods=['GET','POST'])
 def graphAgentColored():
@@ -229,32 +203,20 @@ def graphAgentColored():
                 try:
 
                     #check for error to avoid dot error later on
-                    process = subprocess.Popen(["peosModified/pml/check/pmlcheck", name], stdin=subprocess.PIPE,
-                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    output_res, error = process.communicate()
-                    output_res = output_res.strip().replace(path, name)
+                    output_res,error = test.pmlCheckT(name)
 
-                    # create analysis file
-                    fname, ext = os.path.splitext(name)
-                    path2 = os.path.join(fname + ".analysis")
-                    analysis_file = open(path2, "w")
-                    analysis_file.write(output_res)
-                    analysis_file.close()
-
-
-                    error = error.strip().replace(name + ':', "Line number ")
-                    if process.returncode > 0:
+                    if error:
+                        error = error.strip().replace(name + ':', "Line number ")
                         return render_template('graph.html', result=error, output=text)
+                    
                     resourceflow = test.graph_analysis(pmlfile=name, flag='-f')
 
-                    # create graph
-                    #flushPath('graph.svg')
 
                     Graph2 = pgv.AGraph(resourceflow)
                     Graph2.draw(BUCKET_PATH +'graph3.svg', prog="dot")
 
         
-                    output_res = 'No Errors Detected'
+                    output_res = output_res.strip().replace(name + ':', "Line number ")
 
                     #return graph
                     listFiles = url_for('uploaded_file' , filename= 'graph3.svg')

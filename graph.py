@@ -16,6 +16,24 @@ def getAnalysisFile(filenameA):
 
     return analysis_file.read()#.split('/')[-1]
 
+
+def pmlCheckT(pmlfile):
+
+    basename, ext = os.path.splitext(pmlfile)
+    path = os.path.join(BUCKET_PATH, basename + '.analysis')
+
+    args = ["peosModified/pml/check/pmlcheck", pmlfile]
+    process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    pmlOutput, error = process.communicate()
+
+    #write the output from pmlcheck to an analysis file
+    write2AnaFile = open(path, 'w')
+    write2AnaFile.write(pmlOutput)
+    write2AnaFile.close()
+
+
+    return  pmlOutput,error
+
 #traverse to create dot file
 def traverse(pmlfile, flag):
 
