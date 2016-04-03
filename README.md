@@ -24,10 +24,6 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 ```sudo pip install werkzeug```
 
-```sudo pip install cairosvg```
-
-```sudo pip install -U nltk```
-
 ```sudo pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/" ```
 
 
