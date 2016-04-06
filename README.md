@@ -26,6 +26,17 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 ```sudo pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/" ```
 
+## 3: Install testing dependencies:
+```sudo apt-get install default-jre```
+
+```sudo wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar```
+
+```sudo apt-get install openjdk-7-jdk -y```
+
+```sudo pip install -U selenium```
+
+```sudo pip install behave```
+
 
 ## Installation instructions:
 
