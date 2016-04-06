@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>PML GUI</title>
+    <title>PML GUI - Graph Generated</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/static/layout.css">
     <!-- <script src="static/jquery.js"></script>-->
@@ -32,12 +32,12 @@
             <center> <input type="submit" value="Create Graph"></button></center>  -->  
         <form action="/graph" method="POST">
             <div class="about-div2  ">
-            <textarea name="text" class="lined" onChange="postChange(this.id, 'input');" rows="15" cols="85"  required="required">{{output}}</textarea>
+            <textarea name="text" class="lined" onChange="postChange(this.id, 'input1');" rows="15" cols="85"  required="required">{{output}}</textarea>
             <center> <input type="submit" value="Create Analysis Colored Graph"></button></center>
         </form>
 <p></p>
 <form action="/resource" method ='POST'>
-        <textarea name='input' id='input' onChange="postChange(this.id, 'input2');" style='display:none'required="required">{{output}}</textarea>
+        <textarea name='input1' id='input' onChange="postChange(this.id, 'input2');" style='display:none'required="required">{{output}}</textarea>
         <center><input type='submit' value="Create Resource Flow Graph"></button></center>
         </form>  
 <p></p>
