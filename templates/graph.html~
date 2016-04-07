@@ -10,6 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <META HTTP-EQUIV="refresh" CONTENT="15">
     <meta name="description" content="">
     <meta name="author" content="">
     <!--[if IE]>
@@ -132,7 +133,8 @@ $('#content').keyup(function() {
                 <div class="col-md-8 col-md-offset-2">
 <p></p>
 <textarea name="error" id="error" class="form-control" rows="1" disabled="disabled" placeholder="Error Messages will be reported here">{{result}}</textarea>
-<center><embed src= {{imgpath}} width="700" height="600" type='application/svg'><center>
+<p></p>
+<center><embed src= {{imgpath}} width="700" height="600" type='application/pdf'><center>
             
                     
                 </div>

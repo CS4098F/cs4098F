@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from werkzeug import secure_filename
 import pygraphviz as pgv
 import graph as test
-
+import time
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -136,12 +136,13 @@ def graphAnalysisColored():
 
 
                     Graph = pgv.AGraph(finalgraph)
-                    Graph.draw(BUCKET_PATH +'graph.svg', prog="dot")
+		    filename1 = 'graph'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
+                    Graph.draw(BUCKET_PATH + filename1, prog="dot")
 
 
                     output_res = output_res.strip().replace(name + ':', "Line number ")#'No Errors Detected'
 
-                    listFiles = url_for('uploaded_file' , filename= 'graph.svg')
+                    listFiles = url_for('uploaded_file' , filename=filename1 )
 
                     return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles)
 
@@ -152,7 +153,7 @@ def graphAnalysisColored():
 @app.route("/resource", methods=['GET','POST'])
 def graphResourceFlow():
     #if request.method == 'POST':
-        text = request.form["input"]
+        text = request.form["input1"]
 
         if text:
             with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml') as file:#open(path) as file:
@@ -174,12 +175,13 @@ def graphResourceFlow():
                     resourceflow = test.traverse(pmlfile=name, flag='-n')
 
                     Graph2 = pgv.AGraph(resourceflow)
-                    Graph2.draw(BUCKET_PATH +'graph2.svg', prog="dot")
+		    filename2 = 'graph2'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
+                    Graph2.draw(BUCKET_PATH + filename2, prog="dot")
         
                     output_res = output_res.strip().replace(name + ':', "Line number ")#'No Errors Detected'
 
                     #return graph
-                    listFiles = url_for('uploaded_file' , filename= 'graph2.svg')
+                    listFiles = url_for('uploaded_file' , filename= filename2)
 
                     return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles)
 
@@ -213,13 +215,14 @@ def graphAgentColored():
 
 
                     Graph2 = pgv.AGraph(resourceflow)
-                    Graph2.draw(BUCKET_PATH +'graph3.svg', prog="dot")
+		    filename3 = 'graph'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
+                    Graph2.draw(BUCKET_PATH + flename3, prog="dot")
 
         
                     output_res = output_res.strip().replace(name + ':', "Line number ")
 
                     #return graph
-                    listFiles = url_for('uploaded_file' , filename= 'graph3.svg')
+                    listFiles = url_for('uploaded_file' , filename= filename3)
 
                     return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles)
 

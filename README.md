@@ -24,9 +24,18 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 ```sudo pip install werkzeug```
 
-```sudo pip install cairosvg```
-
 ```sudo pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/" ```
+
+## 3: Install testing dependencies:
+```sudo apt-get install default-jre```
+
+```sudo wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar```
+
+```sudo apt-get install openjdk-7-jdk -y```
+
+```sudo pip install -U selenium```
+
+```sudo pip install behave```
 
 
 ## Installation instructions:
@@ -35,7 +44,7 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 2- ```cd``` into cs4098F folder. Run ```git submodule update --init --recursive```
 
-3- ```cd peos``` and execute  ```make```  on terminal where the Makefile is
+3- ```cd peosModified/pml``` and execute  ```make```  on terminal where the Makefile is
 
 4- go back just one level```cd ..```and run ```python gui.py``` 
 
