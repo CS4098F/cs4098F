@@ -8,15 +8,14 @@
  *
  */
 # include <stdio.h>
-#include <stdarg.h>
 # include <errno.h>
 # include <stdlib.h>
 # include <string.h>
-# include "libgen.h"		/* basename */
-# include "unistd.h"
-# include "scanner.h"
-# include "parser.h"
-# include "tokens.h"
+# include <libgen.h>		/* basename */
+# include <unistd.h>
+# include <pml/scanner.h>
+# include <pml/parser.h>
+# include <pml/tokens.h>
 
 #define TRUE 1
 #define FALSE 0
