@@ -175,7 +175,7 @@ def graphResourceFlow():
                     resourceflow = test.traverse(pmlfile=name, flag='-n')
 
                     Graph2 = pgv.AGraph(resourceflow)
-		    filename2 = 'graph2'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
+                    filename2 = 'graph2'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
                     Graph2.draw(BUCKET_PATH + filename2, prog="dot")
         
                     output_res = output_res.strip().replace(name + ':', "Line number ")#'No Errors Detected'
@@ -211,12 +211,11 @@ def graphAgentColored():
                         error = error.strip().replace(name + ':', "Line number ")
                         return render_template('graph.html', result=error, output=text)
                     
-                    resourceflow = test.graph_analysis(pmlfile=name, flag='-f')
+                    agentColored = test.graph_analysis(pmlfile=name, flag='-f')
 
-
-                    Graph2 = pgv.AGraph(resourceflow)
-		    filename3 = 'graph'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
-                    Graph2.draw(BUCKET_PATH + flename3, prog="dot")
+                    Graph2 = pgv.AGraph(agentColored)
+                    filename3 = 'graph'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
+                    Graph2.draw(BUCKET_PATH + filename3, prog="dot")
 
         
                     output_res = output_res.strip().replace(name + ':', "Line number ")
