@@ -136,7 +136,7 @@ def graphAnalysisColored():
 
 
                     Graph = pgv.AGraph(finalgraph)
-		    filename1 = 'graph'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
+                    filename1 = 'graph'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
                     Graph.draw(BUCKET_PATH + filename1, prog="dot")
 
 

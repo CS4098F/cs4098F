@@ -210,19 +210,23 @@ int find_agent(char *name){
 
 void getagents(Tree t)
 {
-    if(TREE_ID(t)){
-      char *agent = strdup(TREE_ID(t));
-      int idx = find_agent(agent);
-      char *color = colors[idx%MAX_COLORS];
-      printf(",style=filled ,color= %s ", colors[idx%MAX_COLORS]);
-      //printf(",style=filled ,color= %s ", colors[idx%MAX_COLORS]);
-      //printf(" [agent= %s ,color= %s] ", TREE_ID(t) ,color );
+	if (t) {
+    	if(TREE_ID(t)){
+      		char *agent = strdup(TREE_ID(t));
+      		int idx = find_agent(agent);
+      		char *color = colors[idx%MAX_COLORS];
+      		printf(",style=filled ,color= %s ", color);
+      		//printf(",style=filled ,color= %s ", colors[idx%MAX_COLORS]);
+      		//printf(" [agent= %s ,color= %s] ", TREE_ID(t) ,color );
 
+    	}else{
+     		getagents(t->left);
+     		getagents(t->right);
+     	}
+    }else {
+    	//to avoid segmentation error
+    	//printf("[No Agent]");
     }
-    else{
-     getagents(t->left);
-     getagents(t->right);
-     }
 }
 
 
