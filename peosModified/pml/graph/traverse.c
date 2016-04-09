@@ -8,6 +8,7 @@
  *
  */
 # include <stdio.h>
+#include <stdarg.h>
 # include <errno.h>
 # include <stdlib.h>
 # include <string.h>
@@ -17,10 +18,10 @@
 # include <pml/parser.h>
 # include <pml/tokens.h>
 
-#define TRUE 1
-#define FALSE 0
+//#define TRUE 1
+//#define FALSE 0
 #define MAX 512
-#define MAX_COLORS 11
+#define MAX_COLORS 30
 
 typedef enum { FLOW = 0x1, XML=0x2, ANON=0x4} output_t;
 output_t graph_type ;
@@ -32,9 +33,12 @@ int node_num = 0;
 int num_of_agents =0;
 char *agents [MAX];
 
-const char *colors[] = {"blue", "red", "yellow", "firebrick1",\
-                        "chartreuse3", "orange", "turquoise",\
-                        "steelblue", "darkorange", "tan2", "tomato"};
+const char *colors[] = {"antiquewhite3","tan2","royalblue1","yellow4","brown","chocolate","coral2",\
+                        "cyan4","darkorange2","darkorchid4","deeppink3","gold1","goldenrod4","green2",\
+                        "indigo","lightsalmon2","maroon2","orangered1","yellow1","yellowgreen",\
+                        "blue2","violetred4","turquoise4","tomato3","thistle4","aquamarine2","springgreen2",\
+                        "slateblue", "bisque2", "salmon4"
+                        };
 
 
 static String usage = "\
@@ -129,7 +133,7 @@ void insert_iteration_links(Node from, Node to)
 
 void print_resources(Tree t)
 {
-
+    
     if (t) {
 	if (IS_ID_TREE(t)) {
 	    if (TREE_ID(t)[0] == '"') {
@@ -160,28 +164,23 @@ void print_resources(Tree t)
 
 void print_agents(Tree t)
 {
+    
     if (t) {
-
-    if (IS_ID_TREE(t)) {
-        //strcpy(agents,TREE_ID(t));
+	if (IS_ID_TREE(t)) {
 	    if (TREE_ID(t)[0] == '"') {
 		int i;
-        //num_of_agents++;
 		for (i = 1; i < strlen(TREE_ID(t)); i++) {
-		    if (TREE_ID(t)[i] == '"'); break;
+		    if (TREE_ID(t)[i] == '"') break;
 		    putchar(TREE_ID(t)[i]);
-		    *agents = strdup(TREE_ID(t)[i]);
 		}
 	    } else {
-        //num_of_agents++;
 		printf("%s", TREE_ID(t));
-        *agents = strdup(TREE_ID(t));
 	    }
 	} else if (IS_OP_TREE(t)) {
 	    print_agents(t->left);
-	    if (TREE_OP(t) == DOT ) {
+	    if (TREE_OP(t) == DOT) {
 		printf("%s", op_to_string(TREE_OP(t)));
-	    }else if(TREE_OP(t) == AND ) {
+	    } else {
 		printf(" %s ", op_to_string(TREE_OP(t)));
 	    }
 	    print_agents(t->right);
@@ -209,14 +208,21 @@ int find_agent(char *name){
     return num_of_agents++;
 }
 
+void getagents(Tree t)
+{
+    if(TREE_ID(t)){
+      char *agent = strdup(TREE_ID(t));
+      int idx = find_agent(agent);
+      char *color = colors[idx%MAX_COLORS];
+      printf(",style=filled ,color= %s ", colors[idx%MAX_COLORS]);
+      //printf(",style=filled ,color= %s ", colors[idx%MAX_COLORS]);
+      //printf(" [agent= %s ,color= %s] ", TREE_ID(t) ,color );
 
-void color_agents(){
-
-    int i, idx;
-    idx = find_agent(agents);
-    //printf(",style=filled ,color= %s", colors[idx%MAX_COLORS]);
-    printf(",agents=%s ,color= %s",agents, colors[idx%MAX_COLORS]);
-
+    }
+    else{
+     getagents(t->left);
+     getagents(t->right);
+     }
 }
 
 
@@ -288,16 +294,15 @@ void name_node(Node n)
 	    } else {
 	        printf("label=");
 	    	printf("\"");
-	    	printf("Action (%s)\\n", n->name);
-	    	printf("R-> ");
 	    	print_resources(n->requires);
-	    	printf("\nP-> ");
+            printf(" ->\\n%s\\n-> ", n->name);
             print_resources(n->provides);
-            printf("\nAgent(s)\n");
+            printf("\\nAgent(s)\\n");
             print_agents(n->agent);
             printf("\"");
-            color_agents();
+            getagents(n->agent);
 	    	printf("];\n");
+
 	    }
 	} else {
 	    printf("label=\"\"];\n");
@@ -446,7 +451,7 @@ int main(int argc,String argv[]){
 	    }
 	    if (graph_type != XML) {
 		printf("digraph %s {\n", name);
-		printf("process [shape=plaintext, label=\"%s\"];\n", filename);
+		printf("process [shape=plaintext, label=\"%s\"];\n",name );
 	    }
 
 	    name_nodes(program->source);
