@@ -7,8 +7,8 @@
  * Date Last Modified: Aug 11 2003
  *
  */
-
 # include <stdio.h>
+#include <stdarg.h>
 # include <errno.h>
 # include <stdlib.h>
 # include <string.h>
@@ -18,14 +18,28 @@
 # include <pml/parser.h>
 # include <pml/tokens.h>
 
+//#define TRUE 1
+//#define FALSE 0
+#define MAX 512
+#define MAX_COLORS 30
+
 typedef enum { FLOW = 0x1, XML=0x2, ANON=0x4} output_t;
-output_t graph_type = 0;
+output_t graph_type ;
 typedef enum { NONE, NODES, LINKS } label_t;
 label_t label_type = NONE;
 typedef enum { GRAY, BLACK, WHITE } node_color_t;
 
 int node_num = 0;
-int num_agents = 0;
+int num_of_agents =0;
+char *agents [MAX];
+
+const char *colors[] = {"antiquewhite3","tan2","royalblue1","yellow4","brown","chocolate","coral2",\
+                        "cyan4","darkorange2","darkorchid4","deeppink3","gold1","goldenrod4","green2",\
+                        "indigo","lightsalmon2","maroon2","orangered1","yellow1","yellowgreen",\
+                        "blue2","violetred4","turquoise4","tomato3","thistle4","aquamarine2","springgreen2",\
+                        "slateblue", "bisque2", "salmon4"
+                        };
+
 
 static String usage = "\
 usage: %s [options] [file ...]\n\
@@ -46,7 +60,7 @@ extern int main (
 # endif
 );
 
-char *node_type(int type) 
+char *node_type(int type)
 {
     switch (type) {
     case (ACTION): return "action"; break;
@@ -64,11 +78,11 @@ char *node_type(int type)
 }
 
 
-char *node_shape(int type) 
+char *node_shape(int type)
 {
     switch (type) {
     case (ACTION): return "box, style=rounded"; break;
-    case (AGENT): return "diamond, style=rounded"; break;
+    case (AGENT): return "box, style=striped" ;break;
     case (ITERATION): return "diamond, style=filled"; break; /* XXX Never happens. */
     case (SELECTION): return "diamond, style=filled"; break;
     case (JOIN): return "diamond, style=filled"; break;
@@ -153,10 +167,10 @@ void print_agents(Tree t)
     
     if (t) {
 	if (IS_ID_TREE(t)) {
-	    if (TREE_ID(t)[0] == 'agent') {
+	    if (TREE_ID(t)[0] == '"') {
 		int i;
 		for (i = 1; i < strlen(TREE_ID(t)); i++) {
-		    if (TREE_ID(t)[i] == '}') break;
+		    if (TREE_ID(t)[i] == '"') break;
 		    putchar(TREE_ID(t)[i]);
 		}
 	    } else {
@@ -171,12 +185,44 @@ void print_agents(Tree t)
 	    }
 	    print_agents(t->right);
 	} else {
-	    print_agents(t->right);
+	    print_agents(t->left);
 	    print_agents(t->right);
 	}
     } else {
-	printf("[]");
+	printf("[No Agent]");
     }
+}
+
+int find_agent(char *name){
+    int i;
+    for(i=0; i<num_of_agents; i++){
+        if(strcmp(agents[i],name)==0){
+            break;
+        }
+    }
+    if(i < num_of_agents){
+        return i;
+    }
+    agents[num_of_agents] = strdup(name);
+
+    return num_of_agents++;
+}
+
+void getagents(Tree t)
+{
+    if(TREE_ID(t)){
+      char *agent = strdup(TREE_ID(t));
+      int idx = find_agent(agent);
+      char *color = colors[idx%MAX_COLORS];
+      printf(",style=filled ,color= %s ", colors[idx%MAX_COLORS]);
+      //printf(",style=filled ,color= %s ", colors[idx%MAX_COLORS]);
+      //printf(" [agent= %s ,color= %s] ", TREE_ID(t) ,color );
+
+    }
+    else{
+     getagents(t->left);
+     getagents(t->right);
+     }
 }
 
 
@@ -222,7 +268,7 @@ void name_node(Node n)
 	sprintf(buf, "%s_%d", node_type(n->type), node_num++);
 	n->name = strdup(buf);
     }
-   
+
     if (n->type == PROCESS) {
 	/*XXX free(n->name);*/
 	n->name = strdup("start");
@@ -246,11 +292,17 @@ void name_node(Node n)
 		print_resources(n->provides);
 		printf("\"];\n");
 	    } else {
-	    	printf("label=");
+	        printf("label=");
 	    	printf("\"");
-	    	print_agents(n->agent);
-	    	printf(" ->\\n%s\\n", n->name);
-	    	printf("\"];\n");
+	    	print_resources(n->requires);
+            printf(" ->\\n%s\\n-> ", n->name);
+            print_resources(n->provides);
+            printf("\\nAgent(s)\\n");
+            print_agents(n->agent);
+            printf("\"");
+            getagents(n->agent);
+	    	printf("];\n");
+
 	    }
 	} else {
 	    printf("label=\"\"];\n");
@@ -282,8 +334,8 @@ void has_cycle(Node n, int name)
     for (i = 0; (child = (Node) ListIndex(n->successors, i)); i++) {
 	if (graph_type != XML) {
 	    if (!name) {
-		print_link(n, child, 
-			  (node_color_t) child->data == GRAY ? 0 : 1);
+		print_link(n, child,
+			  (node_color_t)child->data == GRAY ? 0 : 1);
 	    }
 	}
 	if ((node_color_t)child->data == WHITE) {
@@ -307,12 +359,9 @@ void traverse(Node n, int name)
 	p->data = (void *) WHITE;
 	p = p->next;
     }
-
     /* Look for cycles. */
     has_cycle(n, name);
 }
-
-
 
 void name_nodes(Node n)
 {
@@ -321,11 +370,10 @@ void name_nodes(Node n)
 }
 
 
+int main(int argc,String argv[]){
+    //int argc;
+    //String argv [ ];
 
-int main(argc, argv)
-    int    argc;
-    String argv [ ];
-{
     int c, status;
 
     filename = "-";
@@ -345,7 +393,7 @@ int main(argc, argv)
 	    label_type = LINKS;
 	    break;
 
-	case 'n': 
+	case 'n':
 	    label_type = NODES;
 	    break;
 
@@ -403,8 +451,9 @@ int main(argc, argv)
 	    }
 	    if (graph_type != XML) {
 		printf("digraph %s {\n", name);
-		printf("process [shape=plaintext, label=\"%s\"];\n", " ");
+		printf("process [shape=plaintext, label=\"%s\"];\n",name );
 	    }
+
 	    name_nodes(program->source);
 	    traverse(program->source, 0);
 	    if (graph_type != XML) {
