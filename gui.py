@@ -211,7 +211,7 @@ def graphAgentColored():
                         error = error.strip().replace(name + ':', "Line number ")
                         return render_template('graph.html', result=error, output=text)
                     
-                    agentColored = test.graph_analysis(pmlfile=name, flag='-f')
+                    agentColored = test.traverse(pmlfile=name, flag='-f')
 
                     Graph2 = pgv.AGraph(agentColored)
                     filename3 = 'graph'  + time.strftime("%Y%m%d-%H%M%S") +'.svg'
