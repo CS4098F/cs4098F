@@ -1,8 +1,7 @@
 # cs4098F
 Repository for CS4098 Group F
 
-
-## 1:Install library dependencies for PEOS : 
+## 1:Install library dependencies for PEOS(Manual installation - see Installation instructions to install from Makefile) :
 
 i)TCL (Ubuntu packages tcl and tcl-dev; see also http://www.activestate.com/activetcl; ).
 
@@ -15,7 +14,7 @@ iv)libxml2 (Ubuntu package libxml2; see also http://www.xmlsoft.org/).
 v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 
-## 2:Install library dependencies for the app :
+## 2:Install library dependencies for the app (Manual installation - see Installation Instruction to install from Makefile) :
 ```sudo apt-get install graphviz git python-pip libgraphviz-dev pkg-config python-dev python3-tk libffi-dev```
 
 ```sudo pip install flask```
@@ -31,11 +30,11 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 1- git clone the repository ``` https://github.com/CS4098F/cs4098F.git ```
 
-2- ```cd``` into cs4098F folder. Run ```git submodule update --init --recursive```
+2- ```cd``` into cs4098F folder. Run ```sudo make install```
 
-3- ```cd peosModified/pml``` and execute  ```make```  on terminal where the Makefile is
+3- install pygraphviz by ```sudo pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/" ```
 
-4- go back just one level```cd ..```and run ```python gui.py``` 
+4- run ```python gui.py``` 
 
 5- go to ```http://127.0.0.1:5000/`` in browser to start app
 
