@@ -144,7 +144,7 @@ def graphAnalysisColored():
 
                     listFiles = url_for('uploaded_file' , filename=filename1 )
 
-                    return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles)
+                    return render_template('graph2.html', result=output_res, output=text, imgpath=listFiles, legend='static/fonts/Legends.png')
 
                 except subprocess.CalledProcessError as err:
                     return err.output.decode(), 400

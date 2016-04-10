@@ -1,5 +1,5 @@
 body {
-    background: #E5E4DF;
+    background: #C9D4D5;/*#E5E4DF;*/
     color: #000305;
     font-size: 87.5%; /* Base font size: 14px */
     font-family: 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -41,6 +41,13 @@ li {
     top: 19px;
     width: 50%;
     bottom: 35px;
+}
+#legends {
+    position: absolute;
+    height: 20%;
+    left: 50%;
+    width: 50%;
+    bottom: -180px;
 }
 
 #compile {
@@ -149,7 +156,7 @@ li {
 }
 
 .linedwrap .codelines .lineno {
-    color:#AAAAAA;
+    color:#F35151;
     padding-right: 0.5em;
     padding-top: 0.0em;
     text-align: right;
