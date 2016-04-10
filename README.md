@@ -27,15 +27,16 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 ```sudo pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/" ```
 
 ## 3: Install testing dependencies:
-```sudo apt-get install default-jre```
 
-```sudo wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar```
+1- Open firefox web browser and go to https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/
 
-```sudo apt-get install openjdk-7-jdk -y```
+2- Download the Selenium IDE from the above link
 
-```sudo pip install -U selenium```
+3- Open Selenium IDE by clicking on the Selenium IDE extension icon on the right of the browser window
 
-```sudo pip install behave```
+4- Open the Test Suite from Selinium IDE by going to File->Open and selecting the path cs4098F/Tests/TextInputTesting.html
+
+5- To run the test suits, select the "Run All" option from the toolbar (A green play button with 3 green filled horizontal bars) 
 
 
 ## Installation instructions:
