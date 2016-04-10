@@ -2,7 +2,7 @@
 Repository for CS4098 Group F
 
 
-1:Install library dependencies for PEOS : 
+## 1:Install library dependencies for PEOS : 
 
 i)TCL (Ubuntu packages tcl and tcl-dev; see also http://www.activestate.com/activetcl; ).
 
@@ -26,20 +26,8 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 ```sudo pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/" ```
 
-## 3: Install testing dependencies:
 
-1- Open firefox web browser and go to https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/
-
-2- Download the Selenium IDE from the above link
-
-3- Open Selenium IDE by clicking on the Selenium IDE extension icon on the right of the browser window
-
-4- Open the Test Suite from Selinium IDE by going to File->Open and selecting the path cs4098F/Tests/TextInputTesting.html
-
-5- To run the test suits, select the "Run All" option from the toolbar (A green play button with 3 green filled horizontal bars) 
-
-
-## Installation instructions:
+## 3:Installation instructions:
 
 1- git clone the repository ``` https://github.com/CS4098F/cs4098F.git ```
 
@@ -51,8 +39,22 @@ v) ```sudo apt-get install libreadline-dev byacc flex lib32ncurses5-dev```
 
 5- go to ```http://127.0.0.1:5000/`` in browser to start app
 
+## 4: Running Tests:
 
-## Features Implemented:
+1- Open firefox web browser and go to https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/
+
+2- Download the Selenium IDE from the above link
+
+3- Open Selenium IDE by clicking on the Selenium IDE extension icon on the right of the browser window
+
+4- Open the Test Suite from Selinium IDE by going to File->Open and selecting the path cs4098F/Tests/TextInputTesting.html
+
+5- To run the test suite, select the "Run All" option from the toolbar (A green play button with 3 green filled horizontal bars) 
+
+6- To run Upload file tests, open the Upload Test Suite from Selenium IDE by going to File->Open and selecting the path cs4098F/Tests/UploadTest.html (Note: It is necessary to alter the paths to the test pml files as the IDE does not support relative paths. To do this, double click on the commands listed as "type" and change the value to the full path location of the pml file named. For example, alter the path of the first command "type" to the path of build_test.pml)
+
+
+## 5: Features Implemented:
 
 File Upload
 - User selects a file from local storage which is then copied as a temporary file for later use. 
@@ -64,9 +66,12 @@ Syntax Analysis
 
 Resource Flow
 - A temporary file is created from the value within the text area and is then passed through traverse, resulting in dot file creation.
-- The dot file with annoted resources is then converted and displayed as a PDF to allow the user to zoom or move around the resultant graph. 
+- The dot file with annoted resources is then converted and displayed as an SVG to allow the user to zoom or move around the resultant graph. 
 
 Analysis Colored Actions
 - A temporary file is created from the value within the text area and is then passed through pmlcheck to generate an analysis file which is then used in conjunction with the pml file, generated dot file, and awk file to designate the colors. 
-- The resulting PDF file is then displayed to allow the user to zoom or move around the graph. 
+- The resulting SVG file is then displayed to allow the user to zoom or move around the graph. 
+
+Agent Colored Actions
+- A temporary files is created from the value within the text area and is then passed through pmlcheck to confirm validity. From there, the input is traversed with agents assigned colours. The resulting SVG file is then generated and displayed
 
