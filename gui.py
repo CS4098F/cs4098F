@@ -113,7 +113,7 @@ def pmlCheck():
 @app.route("/graph", methods=['GET','POST'])
 def graphAnalysisColored():
     #if request.method == 'POST':
-        text = request.form["text"]
+        text = request.form["input2"]
 
         if text:
             with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml', delete=False ) as file:#open(path) as file:
@@ -192,7 +192,7 @@ def graphResourceFlow():
 @app.route("/agents", methods=['GET','POST'])
 def graphAgentColored():
     #if request.method == 'POST':
-        text = request.form["input2"]
+        text = request.form["text"]
 
         if text:
             with tempfile.NamedTemporaryFile(mode='w+t', suffix='.pml') as file:#open(path) as file:

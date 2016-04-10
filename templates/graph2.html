@@ -18,22 +18,14 @@
 <div id="content">
     <!-- ************  CODING ZONE  ************ -->
     <div id="code">
-        <form method="post" action="/graph">
+        <form method="post" action="/agents">
             <div id="title-code" class="head-section">
             </div>
-
-<!--          <fieldset>
-            <legend> Graphviz Engine </legend>
-            <label> <input type=radio name=clicked value="resource" checked=checked>Resource Flow </label>
-            <label> <input type=radio name=clicked value="analysis"> Analysis Colored </label>
-            <label> <input type=radio name=clicked value="agents"> Agent Colored </label>
-        </fieldset> 
-
-            <center> <input type="submit" value="Create Graph"></button></center>  -->  
-        <form action="/graph" method="POST">
+  
+        <form action="/agents" method="POST">
             <div class="about-div2  ">
             <textarea name="text" class="lined" onChange="postChange(this.id, 'input1');" rows="15" cols="85"  required="required">{{output}}</textarea>
-            <center> <input type="submit" value="Create Analysis Colored Graph"></button></center>
+            <center> <input type="submit" value="Create Agent Colored Graph"></button></center>
         </form>
 <p></p>
 <form action="/resource" method ='POST'>
@@ -41,9 +33,9 @@
         <center><input type='submit' value="Create Resource Flow Graph"></button></center>
         </form>  
 <p></p>
-<form action="/agents" method ='POST'>
+<form action="/graph" method ='POST'>
         <textarea name='input2' id='input2' style='display:none'required="required">{{output}}</textarea>
-        <center><input type='submit' value="Create Agent Colored Graph"></button></center>
+        <center><input type='submit' value="Create Analysis Colored Graph"></button></center>
         </form>  
 
     <script>
