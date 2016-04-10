@@ -21,7 +21,7 @@
 #define TRUE 1
 #define FALSE 0
 #define MAX 512
-#define MAX_COLORS 31
+#define MAX_COLORS 32
 #define MYSIZE(A) (sizeof(A) / sizeof(A[0]))
 
 typedef enum { FLOW = 0x1, XML=0x2, ANON=0x4} output_t;
