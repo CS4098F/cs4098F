@@ -1,9 +1,0 @@
-process simple{
-	action aa{
-    	agent{ myself}
-        agent{ yourself}
-    }
-    action bb{
-    	agent{themselves}
-    }
-}
