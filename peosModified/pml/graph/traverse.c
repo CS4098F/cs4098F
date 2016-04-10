@@ -18,10 +18,11 @@
 # include <pml/parser.h>
 # include <pml/tokens.h>
 
-//#define TRUE 1
-//#define FALSE 0
+#define TRUE 1
+#define FALSE 0
 #define MAX 512
-#define MAX_COLORS 30
+#define MAX_COLORS 31
+#define MYSIZE(A) (sizeof(A) / sizeof(A[0]))
 
 typedef enum { FLOW = 0x1, XML=0x2, ANON=0x4} output_t;
 output_t graph_type ;
@@ -32,12 +33,14 @@ typedef enum { GRAY, BLACK, WHITE } node_color_t;
 int node_num = 0;
 int num_of_agents =0;
 char *agents [MAX];
+int more = FALSE;
+int counter = 0;
 
-const char *colors[] = {"antiquewhite3","tan2","royalblue1","yellow4","brown","chocolate","coral2",\
-                        "cyan4","darkorange2","darkorchid4","deeppink3","gold1","goldenrod4","green2",\
-                        "indigo","lightsalmon2","maroon2","orangered1","yellow1","yellowgreen",\
-                        "blue2","violetred4","turquoise4","tomato3","thistle4","aquamarine2","springgreen2",\
-                        "slateblue", "bisque2", "salmon4"
+const char *colors[] = {"antiquewhite3","tan2","royalblue1","wheat4","brown1","chocolate","coral2",\
+                        "cyan4","darkorange2","darkorchid4","deeppink3","gold4","goldenrod4","green2",\
+                        "darkorchid2","lightsalmon2","maroon2","orangered1","yellow1","yellowgreen",\
+                        "lightblue2","violetred4","turquoise4","tomato3","thistle4","aquamarine2","springgreen2",\
+                        "slateblue", "bisque2", "salmon4","turquoise2", "violetred1"
                         };
 
 
@@ -83,11 +86,11 @@ char *node_shape(int type)
     switch (type) {
     case (ACTION): return "box, style=rounded"; break;
     case (AGENT): return "box, style=striped" ;break;
-    case (ITERATION): return "diamond, style=filled"; break; /* XXX Never happens. */
-    case (SELECTION): return "diamond, style=filled"; break;
-    case (JOIN): return "diamond, style=filled"; break;
-    case (BRANCH): return "circle, fixedsize = true, style=filled"; break;
-    case (RENDEZVOUS): return "circle, fixedsize = true, style=filled"; break;
+    case (ITERATION): return "diamond, style=filled, label=ITERATION"; break; /* XXX Never happens. */
+    case (SELECTION): return "diamond, style=filled, label=SELECTION"; break;
+    case (JOIN): return "diamond, style=filled, label=JOIN"; break;
+    case (BRANCH): return "circle, fixedsize = true, style=filled, label=BRANCH"; break;
+    case (RENDEZVOUS): return "circle, fixedsize = true, style=filled, label=RENDEZVOUS"; break;
     case (PROCESS): return "plain"; break;
 
     default: fprintf(stderr, "Help! %s is unknown!\n", node_type(type)); return "plaintext"; break;
@@ -215,11 +218,18 @@ void getagents(Tree t)
       		char *agent = strdup(TREE_ID(t));
       		int idx = find_agent(agent);
       		char *color = colors[idx%MAX_COLORS];
-      		printf(",style=filled ,color= %s ", color);
-      		//printf(",style=filled ,color= %s ", colors[idx%MAX_COLORS]);
-      		//printf(" [agent= %s ,color= %s] ", TREE_ID(t) ,color );
+
+      		if(more){
+       			printf(",style=filled, fillcolor=\"seagreen1:%s\"",color);
+       			//printf(",style=striped  ,fillcolor= %s ", color);
+       			more = FALSE;
+       		}
+      		else{
+      			printf(",style=filled ,color= %s ", color);
+    		}
 
     	}else{
+    		more = TRUE;
      		getagents(t->left);
      		getagents(t->right);
      	}
@@ -309,7 +319,8 @@ void name_node(Node n)
 
 	    }
 	} else {
-	    printf("label=\"\"];\n");
+	    //printf("label=\"\"];\n");
+	    printf("];\n");
 	}
     }
 }
@@ -454,8 +465,9 @@ int main(int argc,String argv[]){
 		if (*p == '-') *p = '_';
 	    }
 	    if (graph_type != XML) {
+	    String fname = " ";
 		printf("digraph %s {\n", name);
-		printf("process [shape=plaintext, label=\"%s\"];\n",name );
+		printf("process [shape=plaintext, label=\"%s\"];\n",fname );
 	    }
 
 	    name_nodes(program->source);
